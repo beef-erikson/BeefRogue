@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.15)
 project(BeefRogue)
 
 set(CMAKE_CXX_STANDARD 14)
-set (CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
+set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
 
 find_package(SDL2 REQUIRED)
 
