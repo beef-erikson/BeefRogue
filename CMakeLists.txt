@@ -8,5 +8,5 @@ find_package(SDL2 REQUIRED)
 
 include_directories(${SDL2_INCLUDE_DIR})
 
-add_executable(BeefRogue main.cpp)
+add_executable(BeefRogue src/main.cpp)
 target_link_libraries(BeefRogue ${SDL2_LIBRARY} -lmingw32 -lSDL2main -lSDL2)
