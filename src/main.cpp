@@ -4,7 +4,7 @@
 //Screen dimension constants
 const int SCREEN_WIDTH{640};
 const int SCREEN_HEIGHT{480};
-const char *const GAME_TITLE{"BeefRogue v0.1"};
+const char *const GAME_TITLE{"BeefRogue v2019.0.1"};
 
 int main(int argc, char *args[]) {
     //The window we'll be rendering to
@@ -32,8 +32,8 @@ int main(int argc, char *args[]) {
             //Update the surface
             SDL_UpdateWindowSurface(window);
 
-            //Wait two seconds
-            SDL_Delay(2000);
+            //Wait four seconds
+            SDL_Delay(4000);
         }
     }
 
