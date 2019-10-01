@@ -8,7 +8,8 @@ const int SCREEN_HEIGHT{600};
 const char *const GAME_TITLE{"BeefRogue v2019.0.1"};
 
 // Inputs
-enum KeyPress {
+enum KeyPress
+{
     KEY_PRESS_SURFACE_DEFAULT,
     KEY_PRESS_SURFACE_UP,
     KEY_PRESS_SURFACE_DOWN,
@@ -44,22 +45,29 @@ SDL_Surface *gameCurrentSurface = nullptr;
 // Background image
 SDL_Surface *gameBackgroundSurface = nullptr;
 
-bool init() {
+bool init()
+{
     // Initialises flag
     bool success = true;
 
     // Initialises SDL
-    if (SDL_Init(SDL_INIT_VIDEO) < 0) {
+    if (SDL_Init(SDL_INIT_VIDEO) < 0)
+    {
         printf("SDL could not initialize! SDL_Error: %s\n", SDL_GetError());
         success = false;
-    } else {
+    }
+    else
+    {
         // Create window
         gameWindow = SDL_CreateWindow(GAME_TITLE, 300, 300,
                                       SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
-        if (gameWindow == nullptr) {
+        if (gameWindow == nullptr)
+        {
             printf("Window could not be created! SDL_Error: %s\n", SDL_GetError());
             success = false;
-        } else {
+        }
+        else
+        {
             // Get window surface
             gameScreenSurface = SDL_GetWindowSurface(gameWindow);
         }
@@ -68,48 +76,55 @@ bool init() {
     return success;
 }
 
-bool loadMedia() {
+bool loadMedia()
+{
     // loading success flag
     bool success = true;
 
     // load default surface
     gameKeyPressSurfaces[KEY_PRESS_SURFACE_DEFAULT] = loadSurface("../sprites/playerDown.bmp");
-    if (gameKeyPressSurfaces[KEY_PRESS_SURFACE_DEFAULT] == nullptr) {
+    if (gameKeyPressSurfaces[KEY_PRESS_SURFACE_DEFAULT] == nullptr)
+    {
         printf("Unable to load default image! SDL_Error: %s\n", SDL_GetError());
         success = false;
     }
 
     // load up surface
     gameKeyPressSurfaces[KEY_PRESS_SURFACE_UP] = loadSurface("../sprites/playerUp.bmp");
-    if (gameKeyPressSurfaces[KEY_PRESS_SURFACE_UP] == nullptr) {
+    if (gameKeyPressSurfaces[KEY_PRESS_SURFACE_UP] == nullptr)
+    {
         printf("Unable to load up image! SDL_Error: %s\n", SDL_GetError());
         success = false;
     }
 
     // load down surface
     gameKeyPressSurfaces[KEY_PRESS_SURFACE_DOWN] = loadSurface("../sprites/playerDown.bmp");
-    if (gameKeyPressSurfaces[KEY_PRESS_SURFACE_DOWN] == nullptr) {
+    if (gameKeyPressSurfaces[KEY_PRESS_SURFACE_DOWN] == nullptr)
+    {
         printf("Unable to load down image! SDL_Error: %s\n", SDL_GetError());
         success = false;
     }
 
     // load left surface
     gameKeyPressSurfaces[KEY_PRESS_SURFACE_LEFT] = loadSurface("../sprites/playerLeft.bmp");
-    if (gameKeyPressSurfaces[KEY_PRESS_SURFACE_LEFT] == nullptr) {
+    if (gameKeyPressSurfaces[KEY_PRESS_SURFACE_LEFT] == nullptr)
+    {
         printf("Unable to load left image! SDL_Error: %s\n", SDL_GetError());
         success = false;
     }
 
     // load right surface
     gameKeyPressSurfaces[KEY_PRESS_SURFACE_RIGHT] = loadSurface("../sprites/playerRight.bmp");
-    if (gameKeyPressSurfaces[KEY_PRESS_SURFACE_RIGHT] == nullptr) {
+    if (gameKeyPressSurfaces[KEY_PRESS_SURFACE_RIGHT] == nullptr)
+    {
         printf("Unable to load right image! SDL_Error: %s\n", SDL_GetError());
         success = false;
     }
 
     // load background surface
     gameBackgroundSurface = loadSurface("../sprites/backgrounds/Greenlands 3.bmp");
-    if (gameBackgroundSurface == nullptr) {
+    if (gameBackgroundSurface == nullptr)
+    {
         printf("Unable to load background image! SDL_Error: %s\n", SDL_GetError());
         success = false;
     }
@@ -117,7 +132,8 @@ bool loadMedia() {
     return success;
 }
 
-void close() {
+void close()
+{
     // Deallocate surfaces
     SDL_FreeSurface(gameCurrentSurface);
     SDL_FreeSurface(gameBackgroundSurface);
@@ -132,18 +148,23 @@ void close() {
     SDL_Quit();
 }
 
-SDL_Surface *loadSurface(const std::string &path) {
+SDL_Surface *loadSurface(const std::string &path)
+{
     // The final optimized image
     SDL_Surface *optimizedSurface = nullptr;
 
     // Load image at specified path
     SDL_Surface *loadedSurface = SDL_LoadBMP(path.c_str());
-    if (loadedSurface == nullptr) {
+    if (loadedSurface == nullptr)
+    {
         printf("Unable to load image %s! SDL Error: %s\n", path.c_str(), SDL_GetError());
-    } else {
+    }
+    else
+    {
         // Convert surface to screen format
         optimizedSurface = SDL_ConvertSurface(loadedSurface, gameScreenSurface->format, 0);
-        if (optimizedSurface == nullptr) {
+        if (optimizedSurface == nullptr)
+        {
             printf("Unable to optimize image %s! SDL_Error: %s\n", path.c_str(), SDL_GetError());
         }
 
@@ -154,16 +175,22 @@ SDL_Surface *loadSurface(const std::string &path) {
     return optimizedSurface;
 }
 
-int main(int argc, char *args[]) {
+int main(int argc, char *args[])
+{
     // Start up SDL and create window
-    if (!init()) {
+    if (!init())
+    {
         printf("Failed to initialize!\n");
-    } else {
+    }
+    else
+    {
         // Load media
-        if (!loadMedia()) {
+        if (!loadMedia())
+        {
             printf("Failed to load media!\n");
-        } else {
-
+        }
+        else
+        {
             // Main loop flag
             bool quit = false;
 
@@ -174,17 +201,22 @@ int main(int argc, char *args[]) {
             gameCurrentSurface = gameKeyPressSurfaces[KEY_PRESS_SURFACE_DEFAULT];
 
             // Game loop
-            while (!quit) {
+            while (!quit)
+            {
                 // Handle events on queue
-                while (SDL_PollEvent(&event) != 0) {
+                while (SDL_PollEvent(&event) != 0)
+                {
                     // User requests quit
-                    if (event.type == SDL_QUIT) {
+                    if (event.type == SDL_QUIT)
+                    {
                         quit = true;
                     }
                         // User presses a key
-                    else if (event.type == SDL_KEYDOWN) {
+                    else if (event.type == SDL_KEYDOWN)
+                    {
                         // Select surfaces based on key press
-                        switch (event.key.keysym.sym) {
+                        switch (event.key.keysym.sym)
+                        {
                             case SDLK_UP:
                             case SDLK_w:
                                 gameCurrentSurface = gameKeyPressSurfaces[KEY_PRESS_SURFACE_UP];
