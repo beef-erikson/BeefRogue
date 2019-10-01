@@ -211,7 +211,7 @@ int main(int argc, char *args[])
                     {
                         quit = true;
                     }
-                        // User presses a key
+                    // User presses a key
                     else if (event.type == SDL_KEYDOWN)
                     {
                         // Select surfaces based on key press
