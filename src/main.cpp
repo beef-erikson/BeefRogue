@@ -1,5 +1,6 @@
-#include <iostream>
-#include "SDL.h"
+#include <cstdio>
+#include <SDL.h>
+#include <string>
 
 //Screen constants
 const int SCREEN_WIDTH{800};
@@ -25,8 +26,8 @@ bool loadMedia();
 // Frees media and shuts down SDL
 void close();
 
-// Loads individual image
-SDL_Surface *loadSurface(const std::string& path);
+// Loads individual optimized image
+SDL_Surface *loadSurface(const std::string &path);
 
 // The window we'll be rendering to
 SDL_Window *gameWindow = nullptr;
@@ -39,6 +40,9 @@ SDL_Surface *gameKeyPressSurfaces[KEY_PRESS_SURFACE_TOTAL];
 
 // Current displayed image
 SDL_Surface *gameCurrentSurface = nullptr;
+
+// Background image
+SDL_Surface *gameBackgroundSurface = nullptr;
 
 bool init() {
     // Initialises flag
@@ -77,8 +81,7 @@ bool loadMedia() {
 
     // load up surface
     gameKeyPressSurfaces[KEY_PRESS_SURFACE_UP] = loadSurface("../sprites/playerUp.bmp");
-    if (gameKeyPressSurfaces[KEY_PRESS_SURFACE_UP] == nullptr)
-    {
+    if (gameKeyPressSurfaces[KEY_PRESS_SURFACE_UP] == nullptr) {
         printf("Unable to load up image! SDL_Error: %s\n", SDL_GetError());
         success = false;
     }
@@ -92,17 +95,22 @@ bool loadMedia() {
 
     // load left surface
     gameKeyPressSurfaces[KEY_PRESS_SURFACE_LEFT] = loadSurface("../sprites/playerLeft.bmp");
-    if (gameKeyPressSurfaces[KEY_PRESS_SURFACE_LEFT] == nullptr)
-    {
+    if (gameKeyPressSurfaces[KEY_PRESS_SURFACE_LEFT] == nullptr) {
         printf("Unable to load left image! SDL_Error: %s\n", SDL_GetError());
         success = false;
     }
 
     // load right surface
     gameKeyPressSurfaces[KEY_PRESS_SURFACE_RIGHT] = loadSurface("../sprites/playerRight.bmp");
-    if (gameKeyPressSurfaces[KEY_PRESS_SURFACE_RIGHT] == nullptr)
-    {
+    if (gameKeyPressSurfaces[KEY_PRESS_SURFACE_RIGHT] == nullptr) {
         printf("Unable to load right image! SDL_Error: %s\n", SDL_GetError());
+        success = false;
+    }
+
+    // load background surface
+    gameBackgroundSurface = loadSurface("../sprites/backgrounds/Greenlands 3.bmp");
+    if (gameBackgroundSurface == nullptr) {
+        printf("Unable to load background image! SDL_Error: %s\n", SDL_GetError());
         success = false;
     }
 
@@ -110,9 +118,11 @@ bool loadMedia() {
 }
 
 void close() {
-    // Deallocate surface
+    // Deallocate surfaces
     SDL_FreeSurface(gameCurrentSurface);
+    SDL_FreeSurface(gameBackgroundSurface);
     gameCurrentSurface = nullptr;
+    gameBackgroundSurface = nullptr;
 
     // Destroy window
     SDL_DestroyWindow(gameWindow);
@@ -122,16 +132,26 @@ void close() {
     SDL_Quit();
 }
 
-SDL_Surface *loadSurface(const std::string& path)
-{
+SDL_Surface *loadSurface(const std::string &path) {
+    // The final optimized image
+    SDL_Surface *optimizedSurface = nullptr;
+
     // Load image at specified path
     SDL_Surface *loadedSurface = SDL_LoadBMP(path.c_str());
-    if (loadedSurface == nullptr)
-    {
+    if (loadedSurface == nullptr) {
         printf("Unable to load image %s! SDL Error: %s\n", path.c_str(), SDL_GetError());
+    } else {
+        // Convert surface to screen format
+        optimizedSurface = SDL_ConvertSurface(loadedSurface, gameScreenSurface->format, 0);
+        if (optimizedSurface == nullptr) {
+            printf("Unable to optimize image %s! SDL_Error: %s\n", path.c_str(), SDL_GetError());
+        }
+
+        // Clean up old image
+        SDL_FreeSurface(loadedSurface);
     }
 
-    return loadedSurface;
+    return optimizedSurface;
 }
 
 int main(int argc, char *args[]) {
@@ -142,60 +162,67 @@ int main(int argc, char *args[]) {
         // Load media
         if (!loadMedia()) {
             printf("Failed to load media!\n");
-        }
-    }
+        } else {
 
-    // Main loop flag
-    bool quit = false;
+            // Main loop flag
+            bool quit = false;
 
-    // Event handler
-    SDL_Event event;
+            // Event handler
+            SDL_Event event;
 
-    // Set default surface to display
-    gameCurrentSurface = gameKeyPressSurfaces[KEY_PRESS_SURFACE_DEFAULT];
+            // Set default surface to display
+            gameCurrentSurface = gameKeyPressSurfaces[KEY_PRESS_SURFACE_DEFAULT];
 
-    // Game loop
-    while (!quit) {
-        // Handle events on queue
-        while (SDL_PollEvent(&event) != 0) {
-            // User requests quit
-            if (event.type == SDL_QUIT) {
-                quit = true;
-            }
-            // User presses a key
-            else if (event.type == SDL_KEYDOWN)
-            {
-                // Select surfaces based on key press
-                switch (event.key.keysym.sym)
-                {
-                    case SDLK_UP:
-                    case SDLK_w:
-                        gameCurrentSurface = gameKeyPressSurfaces[KEY_PRESS_SURFACE_UP];
-                        break;
+            // Game loop
+            while (!quit) {
+                // Handle events on queue
+                while (SDL_PollEvent(&event) != 0) {
+                    // User requests quit
+                    if (event.type == SDL_QUIT) {
+                        quit = true;
+                    }
+                        // User presses a key
+                    else if (event.type == SDL_KEYDOWN) {
+                        // Select surfaces based on key press
+                        switch (event.key.keysym.sym) {
+                            case SDLK_UP:
+                            case SDLK_w:
+                                gameCurrentSurface = gameKeyPressSurfaces[KEY_PRESS_SURFACE_UP];
+                                break;
 
-                    case SDLK_DOWN:
-                    case SDLK_s:
-                        gameCurrentSurface = gameKeyPressSurfaces[KEY_PRESS_SURFACE_DOWN];
-                        break;
+                            case SDLK_DOWN:
+                            case SDLK_s:
+                                gameCurrentSurface = gameKeyPressSurfaces[KEY_PRESS_SURFACE_DOWN];
+                                break;
 
-                    case SDLK_LEFT:
-                    case SDLK_a:
-                        gameCurrentSurface = gameKeyPressSurfaces[KEY_PRESS_SURFACE_LEFT];
-                        break;
+                            case SDLK_LEFT:
+                            case SDLK_a:
+                                gameCurrentSurface = gameKeyPressSurfaces[KEY_PRESS_SURFACE_LEFT];
+                                break;
 
-                    case SDLK_RIGHT:
-                    case SDLK_d:
-                        gameCurrentSurface = gameKeyPressSurfaces[KEY_PRESS_SURFACE_RIGHT];
-                        break;
+                            case SDLK_RIGHT:
+                            case SDLK_d:
+                                gameCurrentSurface = gameKeyPressSurfaces[KEY_PRESS_SURFACE_RIGHT];
+                                break;
+                        }
+                    }
                 }
+
+                // Apply stretched background
+                SDL_Rect stretchBackground;
+                stretchBackground.x = 0;
+                stretchBackground.y = 0;
+                stretchBackground.h = SCREEN_HEIGHT;
+                stretchBackground.w = SCREEN_WIDTH;
+                SDL_BlitScaled(gameBackgroundSurface, nullptr, gameScreenSurface, &stretchBackground);
+
+                // Apply the image
+                SDL_BlitSurface(gameCurrentSurface, nullptr, gameScreenSurface, nullptr);
+
+                // Update the surface
+                SDL_UpdateWindowSurface(gameWindow);
             }
         }
-
-        // Apply the image
-        SDL_BlitSurface(gameCurrentSurface, nullptr, gameScreenSurface, nullptr);
-
-        // Update the surface
-        SDL_UpdateWindowSurface(gameWindow);
     }
 
     // Free resources and close SDL
