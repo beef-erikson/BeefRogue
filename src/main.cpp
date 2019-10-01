@@ -82,7 +82,7 @@ bool loadMedia()
     bool success = true;
 
     // load default surface
-    gameKeyPressSurfaces[KEY_PRESS_SURFACE_DEFAULT] = loadSurface("../sprites/playerDown.bmp");
+    gameKeyPressSurfaces[KEY_PRESS_SURFACE_DEFAULT] = loadSurface("../sprites/player/playerDown.bmp");
     if (gameKeyPressSurfaces[KEY_PRESS_SURFACE_DEFAULT] == nullptr)
     {
         printf("Unable to load default image! SDL_Error: %s\n", SDL_GetError());
@@ -90,7 +90,7 @@ bool loadMedia()
     }
 
     // load up surface
-    gameKeyPressSurfaces[KEY_PRESS_SURFACE_UP] = loadSurface("../sprites/playerUp.bmp");
+    gameKeyPressSurfaces[KEY_PRESS_SURFACE_UP] = loadSurface("../sprites/player/playerUp.bmp");
     if (gameKeyPressSurfaces[KEY_PRESS_SURFACE_UP] == nullptr)
     {
         printf("Unable to load up image! SDL_Error: %s\n", SDL_GetError());
@@ -98,7 +98,7 @@ bool loadMedia()
     }
 
     // load down surface
-    gameKeyPressSurfaces[KEY_PRESS_SURFACE_DOWN] = loadSurface("../sprites/playerDown.bmp");
+    gameKeyPressSurfaces[KEY_PRESS_SURFACE_DOWN] = loadSurface("../sprites/player/playerDown.bmp");
     if (gameKeyPressSurfaces[KEY_PRESS_SURFACE_DOWN] == nullptr)
     {
         printf("Unable to load down image! SDL_Error: %s\n", SDL_GetError());
@@ -106,7 +106,7 @@ bool loadMedia()
     }
 
     // load left surface
-    gameKeyPressSurfaces[KEY_PRESS_SURFACE_LEFT] = loadSurface("../sprites/playerLeft.bmp");
+    gameKeyPressSurfaces[KEY_PRESS_SURFACE_LEFT] = loadSurface("../sprites/player/playerLeft.bmp");
     if (gameKeyPressSurfaces[KEY_PRESS_SURFACE_LEFT] == nullptr)
     {
         printf("Unable to load left image! SDL_Error: %s\n", SDL_GetError());
@@ -114,7 +114,7 @@ bool loadMedia()
     }
 
     // load right surface
-    gameKeyPressSurfaces[KEY_PRESS_SURFACE_RIGHT] = loadSurface("../sprites/playerRight.bmp");
+    gameKeyPressSurfaces[KEY_PRESS_SURFACE_RIGHT] = loadSurface("../sprites/player/playerRight.bmp");
     if (gameKeyPressSurfaces[KEY_PRESS_SURFACE_RIGHT] == nullptr)
     {
         printf("Unable to load right image! SDL_Error: %s\n", SDL_GetError());
