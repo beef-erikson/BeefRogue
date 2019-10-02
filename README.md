@@ -1,6 +1,8 @@
 # BeefRogue
 A framework in progress for a dice-based Rogue-like game.
 
+![BeefRogue v2019.0.1](https://i.imgur.com/dbpqdqz.png)
+
 ## Version 2019.0.1 - Initial Build
 - SDL backbone working with CLion IDE
 - Draws character to screen until user closes window
