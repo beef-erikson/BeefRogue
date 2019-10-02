@@ -14,3 +14,4 @@ A framework in progress for a dice-based Rogue-like game.
 - [mingw](https://sourceforge.net/projects/mingw/)
 - [SDL2 (Development Libraries)](https://www.libsdl.org/download-2.0.php)
 - [SDL2_Image (Development Libraries)](https://www.libsdl.org/projects/SDL_image/)
+- While not necessarily needed, this project was built/developed using [CLion](https://www.jetbrains.com/clion/?fromMenu)
