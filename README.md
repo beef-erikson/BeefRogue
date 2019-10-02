@@ -7,4 +7,5 @@ A framework in progress for a dice-based Rogue-like game.
 - Character changes direction using arrows, wasd
 - Background image added
 - Optimized surface loading and soft stretching of background
+- PNG Support with transparencies
 - Added GPL-3.0 License
