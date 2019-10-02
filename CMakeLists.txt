@@ -5,8 +5,11 @@ set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
 
 find_package(SDL2 REQUIRED)
-
 include_directories(${SDL2_INCLUDE_DIR})
 
+find_package(SDL2_IMAGE REQUIRED)
+include_directories(${SDL2_IMAGE_INCLUDE_DIR})
+
 add_executable(BeefRogue src/main.cpp)
-target_link_libraries(BeefRogue ${SDL2_LIBRARY} -lmingw32 -lSDL2main -lSDL2)
+
+target_link_libraries(BeefRogue ${SDL2_LIBRARY} ${SDL2_IMAGE_LIBRARY} -lmingw32 -lSDL2main -lSDL2)

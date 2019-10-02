@@ -1,6 +1,8 @@
 #include <cstdio>
 #include <SDL.h>
+#include <SDL_image.h>
 #include <string>
+#include <iostream>
 
 //Screen constants
 const int SCREEN_WIDTH{800};
@@ -68,8 +70,18 @@ bool init()
         }
         else
         {
-            // Get window surface
-            gameScreenSurface = SDL_GetWindowSurface(gameWindow);
+            // Initialize PNG loading
+            int imgFlags = IMG_INIT_PNG;
+            if (!(IMG_Init(imgFlags)))
+            {
+                std::cout << "SDL_image could not be initialized! SDL_image Error: %s\n";
+                success = false;
+            }
+            else
+            {
+                // Get window surface
+                gameScreenSurface = SDL_GetWindowSurface(gameWindow);
+            }
         }
     }
 
@@ -82,15 +94,15 @@ bool loadMedia()
     bool success = true;
 
     // load default surface
-    gameKeyPressSurfaces[KEY_PRESS_SURFACE_DEFAULT] = loadSurface("../sprites/player/playerDown.bmp");
+    gameKeyPressSurfaces[KEY_PRESS_SURFACE_DEFAULT] = loadSurface("../sprites/player/playerDown.png");
     if (gameKeyPressSurfaces[KEY_PRESS_SURFACE_DEFAULT] == nullptr)
     {
-        printf("Unable to load default image! SDL_Error: %s\n", SDL_GetError());
+       std::cout << "Unable to load default image! SDL_Error: %s\n";
         success = false;
     }
 
     // load up surface
-    gameKeyPressSurfaces[KEY_PRESS_SURFACE_UP] = loadSurface("../sprites/player/playerUp.bmp");
+    gameKeyPressSurfaces[KEY_PRESS_SURFACE_UP] = loadSurface("../sprites/player/playerUp.png");
     if (gameKeyPressSurfaces[KEY_PRESS_SURFACE_UP] == nullptr)
     {
         printf("Unable to load up image! SDL_Error: %s\n", SDL_GetError());
@@ -98,7 +110,7 @@ bool loadMedia()
     }
 
     // load down surface
-    gameKeyPressSurfaces[KEY_PRESS_SURFACE_DOWN] = loadSurface("../sprites/player/playerDown.bmp");
+    gameKeyPressSurfaces[KEY_PRESS_SURFACE_DOWN] = loadSurface("../sprites/player/playerDown.png");
     if (gameKeyPressSurfaces[KEY_PRESS_SURFACE_DOWN] == nullptr)
     {
         printf("Unable to load down image! SDL_Error: %s\n", SDL_GetError());
@@ -106,7 +118,7 @@ bool loadMedia()
     }
 
     // load left surface
-    gameKeyPressSurfaces[KEY_PRESS_SURFACE_LEFT] = loadSurface("../sprites/player/playerLeft.bmp");
+    gameKeyPressSurfaces[KEY_PRESS_SURFACE_LEFT] = loadSurface("../sprites/player/playerLeft.png");
     if (gameKeyPressSurfaces[KEY_PRESS_SURFACE_LEFT] == nullptr)
     {
         printf("Unable to load left image! SDL_Error: %s\n", SDL_GetError());
@@ -114,7 +126,7 @@ bool loadMedia()
     }
 
     // load right surface
-    gameKeyPressSurfaces[KEY_PRESS_SURFACE_RIGHT] = loadSurface("../sprites/player/playerRight.bmp");
+    gameKeyPressSurfaces[KEY_PRESS_SURFACE_RIGHT] = loadSurface("../sprites/player/playerRight.png");
     if (gameKeyPressSurfaces[KEY_PRESS_SURFACE_RIGHT] == nullptr)
     {
         printf("Unable to load right image! SDL_Error: %s\n", SDL_GetError());
@@ -122,7 +134,7 @@ bool loadMedia()
     }
 
     // load background surface
-    gameBackgroundSurface = loadSurface("../sprites/backgrounds/Greenlands 3.bmp");
+    gameBackgroundSurface = loadSurface("../sprites/backgrounds/Greenlands 3.png");
     if (gameBackgroundSurface == nullptr)
     {
         printf("Unable to load background image! SDL_Error: %s\n", SDL_GetError());
@@ -154,25 +166,12 @@ SDL_Surface *loadSurface(const std::string &path)
     SDL_Surface *optimizedSurface = nullptr;
 
     // Load image at specified path
-    SDL_Surface *loadedSurface = SDL_LoadBMP(path.c_str());
+    SDL_Surface *loadedSurface = IMG_Load(path.c_str());
     if (loadedSurface == nullptr)
     {
-        printf("Unable to load image %s! SDL Error: %s\n", path.c_str(), SDL_GetError());
+        printf("Unable to load image %s! SDL Error: %s\n", path.c_str(), IMG_GetError());
     }
-    else
-    {
-        // Convert surface to screen format
-        optimizedSurface = SDL_ConvertSurface(loadedSurface, gameScreenSurface->format, 0);
-        if (optimizedSurface == nullptr)
-        {
-            printf("Unable to optimize image %s! SDL_Error: %s\n", path.c_str(), SDL_GetError());
-        }
-
-        // Clean up old image
-        SDL_FreeSurface(loadedSurface);
-    }
-
-    return optimizedSurface;
+    return loadedSurface;
 }
 
 int main(int argc, char *args[])
@@ -240,7 +239,7 @@ int main(int argc, char *args[])
                     }
                 }
 
-                // Apply stretched background
+               // Apply stretched background
                 SDL_Rect stretchBackground;
                 stretchBackground.x = 0;
                 stretchBackground.y = 0;
