@@ -1,12 +1,10 @@
 #include <cstdio>
 #include <SDL.h>
-#include <SDL_image.h>
-#include <string>
-#include <iostream>
 #include "Game.h"
+#include "Media.h"
 
 Game game;
-
+Media media;
 // Inputs
 enum KeyPress
 {
@@ -18,12 +16,6 @@ enum KeyPress
     KEY_PRESS_SURFACE_TOTAL
 };
 
-// Loads media
-bool loadMedia();
-
-// Loads individual optimized image
-SDL_Surface *loadSurface(const std::string &path);
-
 // The images that correspond to a keypress
 SDL_Surface *gameKeyPressSurfaces[KEY_PRESS_SURFACE_TOTAL];
 
@@ -33,74 +25,6 @@ SDL_Surface *gameCurrentSurface = nullptr;
 // Background image
 SDL_Surface *gameBackgroundSurface = nullptr;
 
-
-bool loadMedia()
-{
-    // loading success flag
-    bool success = true;
-
-    // load default surface
-    gameKeyPressSurfaces[KEY_PRESS_SURFACE_DEFAULT] = loadSurface("../sprites/player/playerDown.png");
-    if (gameKeyPressSurfaces[KEY_PRESS_SURFACE_DEFAULT] == nullptr)
-    {
-        std::cout << "Unable to load default image! SDL_Error: %s\n";
-        success = false;
-    }
-
-    // load up surface
-    gameKeyPressSurfaces[KEY_PRESS_SURFACE_UP] = loadSurface("../sprites/player/playerUp.png");
-    if (gameKeyPressSurfaces[KEY_PRESS_SURFACE_UP] == nullptr)
-    {
-        printf("Unable to load up image! SDL_Error: %s\n", SDL_GetError());
-        success = false;
-    }
-
-    // load down surface
-    gameKeyPressSurfaces[KEY_PRESS_SURFACE_DOWN] = loadSurface("../sprites/player/playerDown.png");
-    if (gameKeyPressSurfaces[KEY_PRESS_SURFACE_DOWN] == nullptr)
-    {
-        printf("Unable to load down image! SDL_Error: %s\n", SDL_GetError());
-        success = false;
-    }
-
-    // load left surface
-    gameKeyPressSurfaces[KEY_PRESS_SURFACE_LEFT] = loadSurface("../sprites/player/playerLeft.png");
-    if (gameKeyPressSurfaces[KEY_PRESS_SURFACE_LEFT] == nullptr)
-    {
-        printf("Unable to load left image! SDL_Error: %s\n", SDL_GetError());
-        success = false;
-    }
-
-    // load right surface
-    gameKeyPressSurfaces[KEY_PRESS_SURFACE_RIGHT] = loadSurface("../sprites/player/playerRight.png");
-    if (gameKeyPressSurfaces[KEY_PRESS_SURFACE_RIGHT] == nullptr)
-    {
-        printf("Unable to load right image! SDL_Error: %s\n", SDL_GetError());
-        success = false;
-    }
-
-    // load background surface
-    gameBackgroundSurface = loadSurface("../sprites/backgrounds/Greenlands 3.png");
-    if (gameBackgroundSurface == nullptr)
-    {
-        printf("Unable to load background image! SDL_Error: %s\n", SDL_GetError());
-        success = false;
-    }
-
-    return success;
-}
-
-SDL_Surface *loadSurface(const std::string &path)
-{
-    // Load image at specified path
-    SDL_Surface *loadedSurface = IMG_Load(path.c_str());
-    if (loadedSurface == nullptr)
-    {
-        printf("Unable to load image %s! SDL Error: %s\n", path.c_str(), IMG_GetError());
-    }
-    return loadedSurface;
-}
-
 int main(int argc, char *args[])
 {
     // Start up SDL and create window
@@ -108,7 +32,7 @@ int main(int argc, char *args[])
     {
         printf("Failed to initialize!\n");
     }
-    else if (!loadMedia())
+    else if (!Media::loadMedia(gameKeyPressSurfaces, &gameBackgroundSurface))
     {
         printf("Failed to load media!\n");
     }
