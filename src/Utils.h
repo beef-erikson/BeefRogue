@@ -24,5 +24,4 @@ public:
     SDL_Surface *gameScreenSurface = nullptr;
 };
 
-
 #endif //BEEFROGUE_UTILS_H
