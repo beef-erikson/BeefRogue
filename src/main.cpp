@@ -3,11 +3,9 @@
 #include <SDL_image.h>
 #include <string>
 #include <iostream>
+#include "Utils.h"
 
-//Screen constants
-const int SCREEN_WIDTH{800};
-const int SCREEN_HEIGHT{600};
-const char *const GAME_TITLE{"BeefRogue v2019.0.1"};
+
 
 // Inputs
 enum KeyPress
@@ -32,11 +30,9 @@ void close();
 // Loads individual optimized image
 SDL_Surface *loadSurface(const std::string &path);
 
-// The window we'll be rendering to
-SDL_Window *gameWindow = nullptr;
 
-// The surface contained by the window
-SDL_Surface *gameScreenSurface = nullptr;
+Utils utils;
+
 
 // The images that correspond to a keypress
 SDL_Surface *gameKeyPressSurfaces[KEY_PRESS_SURFACE_TOTAL];
@@ -47,46 +43,7 @@ SDL_Surface *gameCurrentSurface = nullptr;
 // Background image
 SDL_Surface *gameBackgroundSurface = nullptr;
 
-bool init()
-{
-    // Initialises flag
-    bool success = true;
 
-    // Initialises SDL
-    if (SDL_Init(SDL_INIT_VIDEO) < 0)
-    {
-        printf("SDL could not initialize! SDL_Error: %s\n", SDL_GetError());
-        success = false;
-    }
-    else
-    {
-        // Create window
-        gameWindow = SDL_CreateWindow(GAME_TITLE, 300, 300,
-                                      SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
-        if (gameWindow == nullptr)
-        {
-            printf("Window could not be created! SDL_Error: %s\n", SDL_GetError());
-            success = false;
-        }
-        else
-        {
-            // Initialize PNG loading
-            int imgFlags = IMG_INIT_PNG;
-            if (!(IMG_Init(imgFlags)))
-            {
-                std::cout << "SDL_image could not be initialized! SDL_image Error: %s\n";
-                success = false;
-            }
-            else
-            {
-                // Get window surface
-                gameScreenSurface = SDL_GetWindowSurface(gameWindow);
-            }
-        }
-    }
-
-    return success;
-}
 
 bool loadMedia()
 {
@@ -153,8 +110,8 @@ void close()
     gameBackgroundSurface = nullptr;
 
     // Destroy window
-    SDL_DestroyWindow(gameWindow);
-    gameWindow = nullptr;
+    SDL_DestroyWindow(utils.gameWindow);
+    utils.gameWindow = nullptr;
 
     // Quit SDL subsystems
     SDL_Quit();
@@ -177,7 +134,7 @@ SDL_Surface *loadSurface(const std::string &path)
 int main(int argc, char *args[])
 {
     // Start up SDL and create window
-    if (!init())
+    if (!utils.init())
     {
         printf("Failed to initialize!\n");
     }
@@ -243,15 +200,15 @@ int main(int argc, char *args[])
                 SDL_Rect stretchBackground;
                 stretchBackground.x = 0;
                 stretchBackground.y = 0;
-                stretchBackground.h = SCREEN_HEIGHT;
-                stretchBackground.w = SCREEN_WIDTH;
-                SDL_BlitScaled(gameBackgroundSurface, nullptr, gameScreenSurface, &stretchBackground);
+                stretchBackground.h = utils.SCREEN_HEIGHT;
+                stretchBackground.w = utils.SCREEN_WIDTH;
+                SDL_BlitScaled(gameBackgroundSurface, nullptr, utils.gameScreenSurface, &stretchBackground);
 
                 // Apply the image
-                SDL_BlitSurface(gameCurrentSurface, nullptr, gameScreenSurface, nullptr);
+                SDL_BlitSurface(gameCurrentSurface, nullptr, utils.gameScreenSurface, nullptr);
 
                 // Update the surface
-                SDL_UpdateWindowSurface(gameWindow);
+                SDL_UpdateWindowSurface(utils.gameWindow);
             }
         }
     }
