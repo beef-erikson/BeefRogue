@@ -37,7 +37,9 @@ int main(int argc, char *args[])
         // Set default surface to display
         gameCurrentSurface = gameKeyPressSurfaces[KeyPress::KEY_PRESS_SURFACE_DEFAULT];
 
+        //
         // Main Game loop
+        //
         while (!quit)
         {
             // Handle events on queue
