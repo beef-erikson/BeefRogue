@@ -18,9 +18,6 @@ enum KeyPress
     KEY_PRESS_SURFACE_TOTAL
 };
 
-// Starts SDL and creates window
-bool init();
-
 // Loads media
 bool loadMedia();
 
@@ -119,9 +116,6 @@ void close()
 
 SDL_Surface *loadSurface(const std::string &path)
 {
-    // The final optimized image
-    SDL_Surface *optimizedSurface = nullptr;
-
     // Load image at specified path
     SDL_Surface *loadedSurface = IMG_Load(path.c_str());
     if (loadedSurface == nullptr)
