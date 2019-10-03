@@ -2,9 +2,10 @@
 // Created by Beef Erikson Studios on 10/3/2019.
 //
 
-#include "Utils.h"
+#include "Game.h"
 
-bool Utils::init()
+// Initializes window
+bool Game::init()
 {
     // Initialises flag
     bool success = true;
@@ -31,7 +32,7 @@ bool Utils::init()
             int imgFlags = IMG_INIT_PNG;
             if (!(IMG_Init(imgFlags)))
             {
-                std::cout << "SDL_image could not be initialized! SDL_image Error: %s\n";
+                printf("SDL_image could not be initialized! SDL_image Error: %s\n", IMG_GetError);
                 success = false;
             }
             else
@@ -44,3 +45,24 @@ bool Utils::init()
 
     return success;
 }
+
+// Ignored UnusedValue as it is actually being used to clear memory (setting the pointers to null)
+#pragma clang diagnostic push
+#pragma ide diagnostic ignored "UnusedValue"
+// Closes Game
+void Game::close(SDL_Surface *pGameCurrentSurface, SDL_Surface *pGameBackgroundSurface)
+{
+    // Deallocate surfaces
+    SDL_FreeSurface(pGameCurrentSurface);
+    SDL_FreeSurface(pGameBackgroundSurface);
+    pGameCurrentSurface = nullptr;
+    pGameBackgroundSurface = nullptr;
+
+    // Destroy window
+    SDL_DestroyWindow(gameWindow);
+    gameWindow = nullptr;
+
+    // Quit SDL subsystems
+    SDL_Quit();
+}
+#pragma clang diagnostic pop
