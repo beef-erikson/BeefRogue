@@ -12,6 +12,6 @@ include_directories(${SDL2_IMAGE_INCLUDE_DIR})
 
 include_directories(${PROJECT_SOURCE_DIR}/src/Game)
 
-add_executable(BeefRogue src/main.cpp src/Game/Game.cpp src/Game/Game.h src/Game/Media.cpp src/Game/Media.h)
+add_executable(BeefRogue src/main.cpp src/Game/Game.cpp src/Game/Game.h src/Game/Media.cpp src/Game/Media.h src/Game/Input.cpp src/Game/Input.h)
 
 target_link_libraries(BeefRogue ${SDL2_LIBRARY} ${SDL2_IMAGE_LIBRARY} -lmingw32 -lSDL2main -lSDL2)

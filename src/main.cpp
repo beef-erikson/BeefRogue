@@ -2,22 +2,12 @@
 #include <SDL.h>
 #include "Game.h"
 #include "Media.h"
+#include "Input.h"
 
 Game game;
-Media media;
-// Inputs
-enum KeyPress
-{
-    KEY_PRESS_SURFACE_DEFAULT,
-    KEY_PRESS_SURFACE_UP,
-    KEY_PRESS_SURFACE_DOWN,
-    KEY_PRESS_SURFACE_LEFT,
-    KEY_PRESS_SURFACE_RIGHT,
-    KEY_PRESS_SURFACE_TOTAL
-};
 
 // The images that correspond to a keypress
-SDL_Surface *gameKeyPressSurfaces[KEY_PRESS_SURFACE_TOTAL];
+SDL_Surface *gameKeyPressSurfaces[KeyPress::KEY_PRESS_SURFACE_TOTAL];
 
 // Current displayed image
 SDL_Surface *gameCurrentSurface = nullptr;
@@ -45,7 +35,7 @@ int main(int argc, char *args[])
         SDL_Event event;
 
         // Set default surface to display
-        gameCurrentSurface = gameKeyPressSurfaces[KEY_PRESS_SURFACE_DEFAULT];
+        gameCurrentSurface = gameKeyPressSurfaces[KeyPress::KEY_PRESS_SURFACE_DEFAULT];
 
         // Main Game loop
         while (!quit)
@@ -53,46 +43,12 @@ int main(int argc, char *args[])
             // Handle events on queue
             while (SDL_PollEvent(&event) != 0)
             {
-                // User requests quit
-                if (event.type == SDL_QUIT)
-                {
-                    quit = true;
-                }
-                    // User presses a key
-                else if (event.type == SDL_KEYDOWN)
-                {
-                    // Select surfaces based on key press
-                    switch (event.key.keysym.sym)
-                    {
-                        case SDLK_UP:
-                        case SDLK_w:
-                            gameCurrentSurface = gameKeyPressSurfaces[KEY_PRESS_SURFACE_UP];
-                            break;
-
-                        case SDLK_DOWN:
-                        case SDLK_s:
-                            gameCurrentSurface = gameKeyPressSurfaces[KEY_PRESS_SURFACE_DOWN];
-                            break;
-
-                        case SDLK_LEFT:
-                        case SDLK_a:
-                            gameCurrentSurface = gameKeyPressSurfaces[KEY_PRESS_SURFACE_LEFT];
-                            break;
-
-                        case SDLK_RIGHT:
-                        case SDLK_d:
-                            gameCurrentSurface = gameKeyPressSurfaces[KEY_PRESS_SURFACE_RIGHT];
-                            break;
-                    }
-                }
+                // Handles keyboard input
+                Input::KeyPressed(event.type, &quit, event, gameKeyPressSurfaces, gameCurrentSurface);
             }
 
             // Apply stretched background
-            SDL_Rect stretchBackground;
-            stretchBackground.x = 0;
-            stretchBackground.y = 0;
-            stretchBackground.h = game.SCREEN_HEIGHT;
-            stretchBackground.w = game.SCREEN_WIDTH;
+            SDL_Rect stretchBackground = Media::stretchBackground();
             SDL_BlitScaled(gameBackgroundSurface, nullptr, game.gameScreenSurface, &stretchBackground);
 
             // Apply the image

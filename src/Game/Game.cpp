@@ -32,7 +32,7 @@ bool Game::init()
             int imgFlags = IMG_INIT_PNG;
             if (!(IMG_Init(imgFlags)))
             {
-                printf("SDL_image could not be initialized! SDL_image Error: %s\n", IMG_GetError);
+                printf("SDL_image could not be initialized! SDL_image Error: %s\n", IMG_GetError());
                 success = false;
             }
             else
