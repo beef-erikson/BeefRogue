@@ -3,22 +3,14 @@
 //
 
 #include <SDL.h>
-<<<<<<< HEAD
 #include <SDL_image.h>
 #include <cstdio>
 #include <string>
-=======
-#include <SDL2/SDL_image.h>
-#include "Game.h"
-#include "Media.h"
-#include "Input.h"
->>>>>>> e6c896af64c190d623e7f43091baa88b495f36ce
 
 // Screen dimension constants
 const int SCREEN_WIDTH{640};
 const int SCREEN_HEIGHT{480};
 
-<<<<<<< HEAD
 // Game name and version
 const char *GAME_TITLE{"BeefRogue v2019.0.1"};
 
@@ -101,50 +93,12 @@ bool loadMedia() {
     if (gTexture == nullptr) {
         printf("Failed to load texture image!\n");
         success = false;
-=======
-// The textures that correspond to a keypress
-SDL_Texture *gameKeyPress[KeyPress::KEY_PRESS_SURFACE_TOTAL];
-
-//Current displayed texture
-SDL_Texture *gameTexture = nullptr;
-
-// Loads background image as texture
-SDL_Texture *backgroundTexture;
-
-//Loads individual image as texture
-SDL_Texture *loadTexture( std::string path );
-
-//The window we'll be rendering to
-SDL_Window *gameWindow = nullptr;
-
-//The window renderer
-SDL_Renderer *gameRenderer = nullptr;
-
-int main(int argc, char *args[])
-{
-    // Start up SDL and create window
-    if (!game.init(gameWindow, gameRenderer))
-    {
-        printf("Failed to initialize!\n");
-    }
-    else
-    {
-        if (!SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "1"))
-        {
-            printf("Warning: Linear texture filtering not enabled!");
-        }
-
-        if (!Media::loadMedia(gameKeyPressSurfaces, &gameBackgroundSurface))
-
-        printf("Failed to load media!\n");
->>>>>>> e6c896af64c190d623e7f43091baa88b495f36ce
     }
 
     // Load background PNG texture
     gBackgroundTexture = loadTexture("../sprites/backgrounds/Greenlands 3.png");
     if (gBackgroundTexture == nullptr)
     {
-<<<<<<< HEAD
         printf("Failed to load background texture image!\n");
         success = false;
     }
@@ -220,29 +174,6 @@ int main(int argc, char *args[]) {
                         quit = true;
                     }
                 }
-=======
-
-        // Main loop flag
-        bool quit = false;
-
-        // Event handler
-        SDL_Event event;
-
-        // Set default surface to display
-        gameCurrentSurface = gameKeyPressSurfaces[KeyPress::KEY_PRESS_SURFACE_DEFAULT];
-
-        //
-        // Main Game loop
-        //
-        while (!quit)
-        {
-            // Handle events on queue
-            while (SDL_PollEvent(&event) != 0)
-            {
-                // Handles keyboard input
-                Input::KeyPressed(event.type, &quit, event, gameKeyPressSurfaces, gameCurrentSurface);
-            }
->>>>>>> e6c896af64c190d623e7f43091baa88b495f36ce
 
                 // Clears screen
                 SDL_RenderClear(gRenderer);
@@ -250,7 +181,6 @@ int main(int argc, char *args[]) {
                 // Correctly scales and places player render
                 SDL_Rect playerRect{0, 0, 46, 64};
 
-<<<<<<< HEAD
                 // Renders background to screen
                 SDL_RenderCopy(gRenderer, gBackgroundTexture, nullptr, nullptr);
 
@@ -260,20 +190,11 @@ int main(int argc, char *args[]) {
                 // Update screen
                 SDL_RenderPresent(gRenderer);
             }
-=======
-            // Update the surface
-            SDL_UpdateWindowSurface(gameWindow);
->>>>>>> e6c896af64c190d623e7f43091baa88b495f36ce
         }
     }
 
-
     // Free resources and close SDL
-<<<<<<< HEAD
     close();
-=======
-    Game::close(gameRenderer, gameWindow);
->>>>>>> e6c896af64c190d623e7f43091baa88b495f36ce
 
     return 0;
 }

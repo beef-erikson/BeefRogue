@@ -2,7 +2,6 @@
 //
 // Created by Beef Erikson Studios on 10/3/2019.
 //
-
 #ifndef BEEFROGUE_MEDIA_H
 #define BEEFROGUE_MEDIA_H
 
@@ -14,7 +13,6 @@
 class Media
 {
 public:
-
     // Loads background
     void loadBackground(SDL_Surface backgroundSurface);
 
@@ -26,7 +24,6 @@ public:
 
     static SDL_Rect *stretchBackground();
 };
-
 
 #endif //BEEFROGUE_MEDIA_H
 */

@@ -2,15 +2,10 @@
 //
 // Created by Beef Erikson Studios on 10/3/2019.
 //
-
 #include "Game.h"
 
 // Initializes window
-<<<<<<< HEAD
 bool Game::init(SDL_Window *pGameWindow, SDL_Renderer *pGameRenderer)
-=======
-bool const Game::init(SDL_Window *pGameWindow, SDL_Renderer *pGameRenderer)
->>>>>>> e6c896af64c190d623e7f43091baa88b495f36ce
 {
     // Initializes flag
     bool success = true;
@@ -31,11 +26,7 @@ bool const Game::init(SDL_Window *pGameWindow, SDL_Renderer *pGameRenderer)
 
         // Create window
         pGameWindow = SDL_CreateWindow(GAME_TITLE, 300, 300,
-<<<<<<< HEAD
                                        SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
-=======
-                                      SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
->>>>>>> e6c896af64c190d623e7f43091baa88b495f36ce
         if (pGameWindow == nullptr)
         {
             printf("Window could not be created! SDL Error: %s\n", SDL_GetError());
@@ -68,11 +59,7 @@ bool const Game::init(SDL_Window *pGameWindow, SDL_Renderer *pGameRenderer)
 }
 
 // Closes Game
-<<<<<<< HEAD
 void Game::close(SDL_Renderer *pGameRenderer, SDL_Window *pGameWindow)
-=======
-void const Game::close(SDL_Renderer *pGameRenderer, SDL_Window *pGameWindow)
->>>>>>> e6c896af64c190d623e7f43091baa88b495f36ce
 {
     // Deallocate surfaces
     SDL_DestroyRenderer(pGameRenderer);
@@ -84,8 +71,4 @@ void const Game::close(SDL_Renderer *pGameRenderer, SDL_Window *pGameWindow)
 
     // Quit SDL subsystems
     SDL_Quit();
-<<<<<<< HEAD
 }*/
-=======
-}
->>>>>>> e6c896af64c190d623e7f43091baa88b495f36ce
