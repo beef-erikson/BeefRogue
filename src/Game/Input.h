@@ -1,3 +1,4 @@
+/*
 //
 // Created by Beef Erikson Studios on 10/3/2019.
 //
@@ -14,15 +15,17 @@ enum KeyPress
     KEY_PRESS_SURFACE_UP,
     KEY_PRESS_SURFACE_DOWN,
     KEY_PRESS_SURFACE_LEFT,
-    KEY_PRESS_SURFACE_RIGHT,
-    KEY_PRESS_SURFACE_TOTAL
+    KEY_PRESS_SURFACE_RIGHT
 };
 
 class Input
 {
 public:
-    static void KeyPressed(unsigned int type, bool *quit, SDL_Event event, SDL_Surface **gameKeyPressSurfaces,
-            SDL_Surface *gameCurrentSurface);
+    // Handles the surface based on keypress
+    SDL_Surface *gameKeyPressSurface = nullptr;
+
+    // Handles keypress logic
+    static void KeyPressed(unsigned int type, bool *quit, SDL_Event event, SDL_Surface gameKeyPressSurface);
 };
 
-#endif //BEEFROGUE_INPUT_H
+#endif //BEEFROGUE_INPUT_H*/

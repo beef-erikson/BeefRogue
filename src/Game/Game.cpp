@@ -1,3 +1,4 @@
+/*
 //
 // Created by Beef Erikson Studios on 10/3/2019.
 //
@@ -5,40 +6,52 @@
 #include "Game.h"
 
 // Initializes window
-bool Game::init()
+bool Game::init(SDL_Window *pGameWindow, SDL_Renderer *pGameRenderer)
 {
-    // Initialises flag
+    // Initializes flag
     bool success = true;
 
-    // Initialises SDL
+    // Initializes SDL
     if (SDL_Init(SDL_INIT_VIDEO) < 0)
     {
-        printf("SDL could not initialize! SDL_Error: %s\n", SDL_GetError());
+        printf("SDL could not initialize! SDL Error: %s\n", SDL_GetError());
         success = false;
     }
     else
     {
-        // Create window
-        gameWindow = SDL_CreateWindow(GAME_TITLE, 300, 300,
-                                      SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
-        if (gameWindow == nullptr)
+        //Set texture filtering to linear
+        if (!SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "1"))
         {
-            printf("Window could not be created! SDL_Error: %s\n", SDL_GetError());
+            printf("Warning: Linear texture filtering not enabled!");
+        }
+
+        // Create window
+        pGameWindow = SDL_CreateWindow(GAME_TITLE, 300, 300,
+                                       SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
+        if (pGameWindow == nullptr)
+        {
+            printf("Window could not be created! SDL Error: %s\n", SDL_GetError());
             success = false;
         }
         else
         {
-            // Initialize PNG loading
-            int imgFlags = IMG_INIT_PNG;
-            if (!(IMG_Init(imgFlags)))
+            // Create renderer for window
+            pGameRenderer = SDL_CreateRenderer(pGameWindow, -1, SDL_RENDERER_ACCELERATED);
+            if (pGameRenderer == nullptr)
             {
-                printf("SDL_image could not be initialized! SDL_image Error: %s\n", IMG_GetError());
+                printf("Renderer could not be created! SDL Error: %s\n", SDL_GetError());
                 success = false;
-            }
-            else
-            {
-                // Get window surface
-                gameScreenSurface = SDL_GetWindowSurface(gameWindow);
+            } else {
+                // Initialize renderer color
+                SDL_SetRenderDrawColor(pGameRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
+
+                // Initialize PNG loading
+                int imgFlags = IMG_INIT_PNG;
+                if (!(IMG_Init(imgFlags)))
+                {
+                    printf("SDL_image could not be initialized! SDL_image Error: %s\n", IMG_GetError());
+                    success = false;
+                }
             }
         }
     }
@@ -46,23 +59,17 @@ bool Game::init()
     return success;
 }
 
-// Ignored UnusedValue as it is actually being used to clear memory (setting the pointers to null)
-#pragma clang diagnostic push
-#pragma ide diagnostic ignored "UnusedValue"
 // Closes Game
-void Game::close(SDL_Surface *pGameCurrentSurface, SDL_Surface *pGameBackgroundSurface)
+void Game::close(SDL_Renderer *pGameRenderer, SDL_Window *pGameWindow)
 {
     // Deallocate surfaces
-    SDL_FreeSurface(pGameCurrentSurface);
-    SDL_FreeSurface(pGameBackgroundSurface);
-    pGameCurrentSurface = nullptr;
-    pGameBackgroundSurface = nullptr;
+    SDL_DestroyRenderer(pGameRenderer);
+    pGameRenderer = nullptr;
 
     // Destroy window
-    SDL_DestroyWindow(gameWindow);
-    gameWindow = nullptr;
+    SDL_DestroyWindow(pGameWindow);
+    pGameWindow = nullptr;
 
     // Quit SDL subsystems
     SDL_Quit();
-}
-#pragma clang diagnostic pop
+}*/

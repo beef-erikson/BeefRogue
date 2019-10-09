@@ -1,3 +1,4 @@
+/*
 //
 // Created by Beef Erikson Studios on 10/3/2019.
 //
@@ -13,10 +14,19 @@
 class Media
 {
 public:
-    static bool loadMedia(SDL_Surface **pGameKeyPressSurfaces, SDL_Surface **pGameBackgroundSurface);
-    static SDL_Surface *loadSurface(const std::string &path);
-    static SDL_Rect stretchBackground();
+
+    // Loads background
+    void loadBackground(SDL_Surface backgroundSurface);
+
+    // Loads individual image as texture
+    SDL_Texture *loadTexture(SDL_Surface loadedSurface, SDL_Renderer *pGameRenderer, const std::string &path);
+
+    bool loadMedia(SDL_Surface *pGameKeyPressSurface, SDL_Texture *pGameBackgroundTexture,
+                          SDL_Renderer *pGameRenderer);
+
+    static SDL_Rect *stretchBackground();
 };
 
 
 #endif //BEEFROGUE_MEDIA_H
+*/
