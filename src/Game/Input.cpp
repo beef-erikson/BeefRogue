@@ -4,8 +4,8 @@
 
 #include "Input.h"
 
-void Input::KeyPressed(unsigned int type, bool *quit, SDL_Event event, SDL_Surface **gameKeyPressSurfaces,
-        SDL_Surface *gameCurrentSurface)
+void Input::KeyPressed(unsigned int type, bool *quit, SDL_Event event, SDL_Texture *pGameKeyPressTextures,
+        SDL_Texture *pGameTexture)
 {
     // User quit
     if (type == SDL_QUIT)
@@ -21,22 +21,22 @@ void Input::KeyPressed(unsigned int type, bool *quit, SDL_Event event, SDL_Surfa
         {
             case SDLK_UP:
             case SDLK_w:
-                *gameCurrentSurface = *gameKeyPressSurfaces[KEY_PRESS_SURFACE_UP];
+                pGameTexture = pGameKeyPressTextures[KEY_PRESS_SURFACE_UP];
                 break;
 
             case SDLK_DOWN:
             case SDLK_s:
-                *gameCurrentSurface = *gameKeyPressSurfaces[KEY_PRESS_SURFACE_DOWN];
+                pGameTexture = pGameKeyPressTextures[KEY_PRESS_SURFACE_DOWN];
                 break;
 
             case SDLK_LEFT:
             case SDLK_a:
-                *gameCurrentSurface = *gameKeyPressSurfaces[KEY_PRESS_SURFACE_LEFT];
+                pGameTexture = pGameKeyPressTextures[KEY_PRESS_SURFACE_LEFT];
                 break;
 
             case SDLK_RIGHT:
             case SDLK_d:
-                *gameCurrentSurface = *gameKeyPressSurfaces[KEY_PRESS_SURFACE_RIGHT];
+                pGameTexture = pGameKeyPressTextures[KEY_PRESS_SURFACE_RIGHT];
                 break;
         }
     }

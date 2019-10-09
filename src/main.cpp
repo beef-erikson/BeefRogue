@@ -1,33 +1,51 @@
 #include <cstdio>
 #include <SDL.h>
+#include <SDL2/SDL_image.h>
 #include "Game.h"
 #include "Media.h"
 #include "Input.h"
 
 Game game;
 
-// The images that correspond to a keypress
-SDL_Surface *gameKeyPressSurfaces[KeyPress::KEY_PRESS_SURFACE_TOTAL];
+// The textures that correspond to a keypress
+SDL_Texture *gameKeyPress[KeyPress::KEY_PRESS_SURFACE_TOTAL];
 
-// Current displayed image
-SDL_Surface *gameCurrentSurface = nullptr;
+//Current displayed texture
+SDL_Texture *gameTexture = nullptr;
 
-// Background image
-SDL_Surface *gameBackgroundSurface = nullptr;
+// Loads background image as texture
+SDL_Texture *backgroundTexture;
+
+//Loads individual image as texture
+SDL_Texture *loadTexture( std::string path );
+
+//The window we'll be rendering to
+SDL_Window *gameWindow = nullptr;
+
+//The window renderer
+SDL_Renderer *gameRenderer = nullptr;
 
 int main(int argc, char *args[])
 {
     // Start up SDL and create window
-    if (!game.init())
+    if (!game.init(gameWindow, gameRenderer))
     {
         printf("Failed to initialize!\n");
     }
-    else if (!Media::loadMedia(gameKeyPressSurfaces, &gameBackgroundSurface))
+    else
     {
+        if (!SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "1"))
+        {
+            printf("Warning: Linear texture filtering not enabled!");
+        }
+
+        if (!Media::loadMedia(gameKeyPressSurfaces, &gameBackgroundSurface))
+
         printf("Failed to load media!\n");
     }
     else
     {
+
         // Main loop flag
         bool quit = false;
 
@@ -57,12 +75,13 @@ int main(int argc, char *args[])
             SDL_BlitSurface(gameCurrentSurface, nullptr, game.gameScreenSurface, nullptr);
 
             // Update the surface
-            SDL_UpdateWindowSurface(game.gameWindow);
+            SDL_UpdateWindowSurface(gameWindow);
         }
     }
 
+
     // Free resources and close SDL
-    game.close(gameCurrentSurface, gameBackgroundSurface);
+    Game::close(gameRenderer, gameWindow);
 
     return 0;
 }
