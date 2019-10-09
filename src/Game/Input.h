@@ -21,11 +21,16 @@ enum KeyPress
 class Input
 {
 public:
+<<<<<<< HEAD
     // Handles the surface based on keypress
     SDL_Surface *gameKeyPressSurface = nullptr;
 
     // Handles keypress logic
     static void KeyPressed(unsigned int type, bool *quit, SDL_Event event, SDL_Surface gameKeyPressSurface);
+=======
+    static void KeyPressed(unsigned int type, bool *quit, SDL_Event event, SDL_Texture *pGameKeyPressTextures,
+            SDL_Texture *pGameTexture);
+>>>>>>> e6c896af64c190d623e7f43091baa88b495f36ce
 };
 
 #endif //BEEFROGUE_INPUT_H*/
