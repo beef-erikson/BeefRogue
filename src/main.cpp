@@ -6,6 +6,7 @@
 #include <SDL_image.h>
 #include <cstdio>
 #include <string>
+#include "Player.h"
 
 // Screen dimension constants
 const int SCREEN_WIDTH{640};
@@ -37,6 +38,10 @@ SDL_Texture *gBackgroundTexture{nullptr};
 
 // Current displayed texture
 SDL_Texture *gTexture{nullptr};
+
+// Create Player instance
+Player playerOne;
+
 
 bool init() {
     // Initialization flag

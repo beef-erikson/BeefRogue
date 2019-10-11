@@ -1,18 +1,8 @@
 //
-// Created by Beef Erikson Studios on 10/10/2019.
+// Created by Beef Erikson Studios on 10/11/2019.
 //
 
 #include "Character.h"
-
-// Constructor with sprites and isNPC properties
-Character::Character(SDL_Texture *facingUp, SDL_Texture *facingDown, SDL_Texture *facingRight,
-                     SDL_Texture *facingLeft, bool isNPC) {
-    facingUp = this->facingUp;
-    facingDown = this->facingDown;
-    facingRight = this->facingRight;
-    facingLeft = this->facingLeft;
-    isNPC = this->isNPC;
-}
 
 // Set sprite when facing up
 void Character::set_facing_up(SDL_Texture *setFacingUp) {
