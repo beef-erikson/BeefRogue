@@ -11,16 +11,16 @@ class Player : public Character {
 public:
     Player() = default;
 
-    Player(SDL_Texture *facingUp,
-           SDL_Texture *facingDown,
-           SDL_Texture *facingRight,
-           SDL_Texture *facingLeft,
+    Player(std::string facingUp,
+           std::string facingDown,
+           std::string facingLeft,
+           std::string facingRight,
            bool isNPC,
            int health) :
             Character(facingUp,
                       facingDown,
-                      facingRight,
                       facingLeft,
+                      facingRight,
                       isNPC,
                       health) {}
 };

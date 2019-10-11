@@ -39,9 +39,6 @@ SDL_Texture *gBackgroundTexture{nullptr};
 // Current displayed texture
 SDL_Texture *gTexture{nullptr};
 
-// Create Player instance
-Player playerOne;
-
 
 bool init() {
     // Initialization flag
@@ -152,6 +149,22 @@ SDL_Texture *loadTexture(const std::string &path) {
 }
 
 int main(int argc, char *args[]) {
+    // Create Player instance
+    Player playerOne;
+    playerOne.set_facing_down("../sprites/player/playerDown.png");
+    playerOne.set_facing_up("../sprites/player/playerUp.png");
+    playerOne.set_facing_left("../sprites/player/playerLeft.png");
+    playerOne.set_facing_right("../sprites/player/playerRight.png");
+    playerOne.set_health(100);
+    playerOne.set_is_NPC(false);
+
+    Player playerTwo("../sprites/player/playerUp.png",
+                     "../sprites/player/playerDown.png",
+                     "../sprites/player/playerLeft.png",
+                     "../sprites/player/playerRight.png",
+                     false,
+                     100);
+
     // Start up SDL and create window
     if (!init()) {
         printf("Failed to initialize!\n");
