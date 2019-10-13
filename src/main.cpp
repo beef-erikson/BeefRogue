@@ -7,6 +7,7 @@
 #include <cstdio>
 #include <string>
 #include "Player.h"
+#include "Input.h"
 
 // Screen dimension constants
 const int SCREEN_WIDTH{640};
@@ -176,7 +177,7 @@ int main(int argc, char *args[]) {
         }
         else {
             // Main loop flag
-            bool quit{false};
+            bool quit = false;
 
             // Event handler
             SDL_Event event;
@@ -187,10 +188,8 @@ int main(int argc, char *args[]) {
             while (!quit) {
                 // Handle events on queue
                 while (SDL_PollEvent(&event) != 0) {
-                    // User requests quit
-                    if (event.type == SDL_QUIT) {
-                        quit = true;
-                    }
+                    // User input made
+                    Input::KeyPressed(&quit, event, gTexture, playerOne);
                 }
 
                 // Clears screen

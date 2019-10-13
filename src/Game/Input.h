@@ -1,11 +1,11 @@
-/*
 //
-// Created by Beef Erikson Studios on 10/3/2019.
+// Created by Beef Erikson Studios on 10/12/2019.
 //
 #ifndef BEEFROGUE_INPUT_H
 #define BEEFROGUE_INPUT_H
 
 #include <SDL.h>
+#include "Player.h"
 
 // Inputs
 enum KeyPress
@@ -20,11 +20,8 @@ enum KeyPress
 class Input
 {
 public:
-    // Handles the surface based on keypress
-    SDL_Surface *gameKeyPressSurface = nullptr;
-
     // Handles keypress logic
-    static void KeyPressed(unsigned int type, bool *quit, SDL_Event event, SDL_Surface gameKeyPressSurface);
+    static void KeyPressed(bool *quit, SDL_Event , SDL_Texture *gTexture, Player *player);
 };
 
-#endif //BEEFROGUE_INPUT_H*/
+#endif //BEEFROGUE_INPUT_H

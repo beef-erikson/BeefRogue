@@ -6,11 +6,14 @@
 #define BEEFROGUE_PLAYER_H
 
 #include "Character.h"
+#include "Input.h"
 
 class Player : public Character {
 public:
+    // Default constructor
     Player() = default;
 
+    // Constructor with all properties
     Player(std::string facingUp,
            std::string facingDown,
            std::string facingLeft,
@@ -22,7 +25,10 @@ public:
                       facingLeft,
                       facingRight,
                       isNPC,
-                      health) {}
+                      health) {};
+
+    // Move player based on provided direction
+    void movePlayer(KeyPress direction, SDL_Texture *gTexture);
 };
 
 #endif //BEEFROGUE_PLAYER_H

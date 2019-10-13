@@ -1,43 +1,42 @@
-/*
 //
 // Created by Beef Erikson Studios on 10/3/2019.
 //
 
 #include "Input.h"
 
-void Input::KeyPressed(unsigned int type, bool *quit, SDL_Event event, SDL_Surface **gameKeyPressSurfaces,
-                       SDL_Surface *gameCurrentSurface)
-{
+void Input::KeyPressed(bool *quit, SDL_Event event, SDL_Texture *gTexture, Player *player) {
     // User quit
-    if (type == SDL_QUIT)
-    {
+    if (event.type == SDL_QUIT) {
         *quit = true;
     }
 
     // User presses a key
-    if (type == SDL_KEYDOWN)
-    {
+    if (event.type == SDL_KEYDOWN) {
         // Select surfaces based on key press
-        switch (event.key.keysym.sym)
-        {
+        switch (event.key.keysym.sym) {
             case SDLK_UP:
             case SDLK_w:
-                *gameCurrentSurface = *gameKeyPressSurfaces[KEY_PRESS_SURFACE_UP];
+                player->movePlayer(KEY_PRESS_SURFACE_UP, &gTexture);
                 break;
 
             case SDLK_DOWN:
             case SDLK_s:
-                *gameCurrentSurface = *gameKeyPressSurfaces[KEY_PRESS_SURFACE_DOWN];
+                player->movePlayer(KEY_PRESS_SURFACE_DOWN, &gTexture);
                 break;
 
             case SDLK_LEFT:
             case SDLK_a:
-                *gameCurrentSurface = *gameKeyPressSurfaces[KEY_PRESS_SURFACE_LEFT];
+                player->movePlayer(KEY_PRESS_SURFACE_LEFT, &gTexture);
                 break;
 
             case SDLK_RIGHT:
             case SDLK_d:
-                *gameCurrentSurface = *gameKeyPressSurfaces[KEY_PRESS_SURFACE_RIGHT];
+                player->movePlayer(KEY_PRESS_SURFACE_RIGHT, &gTexture);
+                break;
+
+            default:
+                player->movePlayer(KEY_PRESS_SURFACE_DEFAULT, &gTexture);
                 break;
         }
-    }*/
+    }
+}
