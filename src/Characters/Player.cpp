@@ -1,34 +1,37 @@
+/*
 //
 // Created by Beef Erikson Studios on 10/12/2019.
 //
 
 #include "Player.h"
 
-void Player::movePlayer(KeyPress direction, SDL_Texture *gTexture) {
+
+void Player::movePlayer(int direction, SDL_Texture *gTexture) {
     switch (direction) {
         // Up key image
-        case KEY_PRESS_SURFACE_UP:
+        case 1:
             gTexture = facingUp_;
             break;
 
         // Down key image
-        case KEY_PRESS_SURFACE_DOWN:
+        case 2:
             gTexture = facingDown_;
             break;
 
         // Left key image
-        case KEY_PRESS_SURFACE_LEFT:
+        case 3:
             gTexture = facingLeft_;
             break;
 
         // Right key image
-        case KEY_PRESS_SURFACE_RIGHT:
+        case 4:
             gTexture = facingRight_;
             break;
 
         // Default image
-        case KEY_PRESS_SURFACE_DEFAULT:
+        case 0:
             gTexture = facingDown_;
             break;
     }
 }
+*/

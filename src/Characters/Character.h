@@ -1,7 +1,7 @@
 //
 // Created by Beef Erikson Studios on 10/10/2019.
 //
-
+/*
 #ifndef BEEFROGUE_CHARACTER_H
 #define BEEFROGUE_CHARACTER_H
 
@@ -11,9 +11,7 @@
 
 class Character {
 public:
-    // Constructors
-    Character() = default;
-
+    // Constructor
     Character(std::string &facingUp,
               std::string &facingDown,
               std::string &facingLeft,
@@ -59,3 +57,4 @@ protected:
 };
 
 #endif //BEEFROGUE_CHARACTER_H
+ */

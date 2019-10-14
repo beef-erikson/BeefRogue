@@ -1,3 +1,4 @@
+/*
 //
 // Created by Beef Erikson Studios on 10/12/2019.
 //
@@ -21,7 +22,8 @@ class Input
 {
 public:
     // Handles keypress logic
-    static void KeyPressed(bool *quit, SDL_Event , SDL_Texture *gTexture, Player *player);
+    static void KeyPressed(bool *quit, SDL_Event , SDL_Texture *gTexture);
 };
 
 #endif //BEEFROGUE_INPUT_H
+*/

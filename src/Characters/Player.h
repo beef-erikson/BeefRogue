@@ -1,3 +1,4 @@
+/*
 //
 // Created by Beef Erikson Studios on 10/11/2019.
 //
@@ -10,11 +11,8 @@
 
 class Player : public Character {
 public:
-    // Default constructor
-    Player() = default;
-
     // Constructor with all properties
-    Player(std::string facingUp,
+    *Player(std::string facingUp,
            std::string facingDown,
            std::string facingLeft,
            std::string facingRight,
@@ -27,8 +25,10 @@ public:
                       isNPC,
                       health) {};
 
+
     // Move player based on provided direction
-    void movePlayer(KeyPress direction, SDL_Texture *gTexture);
+    void movePlayer(int keypress, SDL_Texture *gTexture);
+
 };
 
-#endif //BEEFROGUE_PLAYER_H
+#endif //BEEFROGUE_PLAYER_H*/

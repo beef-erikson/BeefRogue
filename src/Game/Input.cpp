@@ -4,7 +4,8 @@
 
 #include "Input.h"
 
-void Input::KeyPressed(bool *quit, SDL_Event event, SDL_Texture *gTexture, Player *player) {
+/*
+void Input::KeyPressed(bool *quit, SDL_Event event, SDL_Texture *gTexture) {
     // User quit
     if (event.type == SDL_QUIT) {
         *quit = true;
@@ -40,3 +41,4 @@ void Input::KeyPressed(bool *quit, SDL_Event event, SDL_Texture *gTexture, Playe
         }
     }
 }
+*/
