@@ -1,11 +1,10 @@
-/*
 //
-// Created by Beef Erikson Studios on 10/12/2019.
+// Created by Beef Erikson Studios on 10/15/2019.
 //
 
 #include "Player.h"
 
-
+/*
 void Player::movePlayer(int direction, SDL_Texture *gTexture) {
     switch (direction) {
         // Up key image

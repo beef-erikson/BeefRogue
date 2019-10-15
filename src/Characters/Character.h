@@ -1,13 +1,12 @@
 //
-// Created by Beef Erikson Studios on 10/10/2019.
+// Created by Beef Erikson Studios on 10/15/2019.
 //
-/*
+
 #ifndef BEEFROGUE_CHARACTER_H
 #define BEEFROGUE_CHARACTER_H
 
 #include <SDL.h>
 #include <string>
-#include <utility>
 
 class Character {
 public:
@@ -17,44 +16,43 @@ public:
               std::string &facingLeft,
               std::string &facingRight,
               bool isNPC,
-              int health) : facingUp_(facingUp), facingDown_(facingDown), facingLeft_(facingLeft),
-                            facingRight_(facingRight), isNPC_(isNPC), health_(health) {};
+              int health) : m_facingUp(facingUp), m_facingDown(facingDown), m_facingLeft(facingLeft),
+                            m_facingRight(facingRight), m_isNPC(isNPC), m_health(health){};
 
     // Getters
-    int get_health() { return health_; }
+    int get_health() { return m_health; }
 
-    bool get_is_npc() { return isNPC_; }
+    bool get_is_npc() { return m_isNPC; }
 
-    const std::string *get_facingUp() { return &facingUp_; }
+    std::string get_facingUp() { return m_facingUp; }
 
-    const std::string *get_facingDown() { return &facingDown_; }
+    std::string get_facingDown() { return m_facingDown; }
 
-    const std::string *get_facingRight() { return &facingRight_; }
+    std::string get_facingRight() { return m_facingRight; }
 
-    const std::string *get_facingLeft() { return &facingLeft_; }
+    std::string get_facingLeft() { return m_facingLeft; }
 
     // Setters
-    void set_facing_up(const std::string &facingUp) { facingUp_ = facingUp; }
+    void set_facing_up(std::string &facingUp) { m_facingUp = facingUp; }
 
-    void set_facing_down(const std::string &facingDown) { facingDown_ = facingDown; }
+    void set_facing_down(std::string &facingDown) { m_facingDown = facingDown; }
 
-    void set_facing_left(const std::string &facingLeft) { facingLeft_ = facingLeft; }
+    void set_facing_left(std::string &facingLeft) { m_facingLeft = facingLeft; }
 
-    void set_facing_right(const std::string &facingRight) { facingRight_ = facingRight; }
+    void set_facing_right(std::string &facingRight) { m_facingRight = facingRight; }
 
-    void set_is_NPC(bool isNPC) { isNPC_ = isNPC; };
+    void set_is_NPC(bool isNPC) { m_isNPC = isNPC; };
 
-    void set_health(int health) { health_ = health; };
+    void set_health(int health) { m_health = health; };
 
 
 protected:
-    std::string facingUp_;
-    std::string facingDown_;
-    std::string facingLeft_;
-    std::string facingRight_;
-    bool isNPC_;
-    int health_;
+    std::string m_facingUp;
+    std::string m_facingDown;
+    std::string m_facingLeft;
+    std::string m_facingRight;
+    bool m_isNPC;
+    int m_health;
 };
 
 #endif //BEEFROGUE_CHARACTER_H
- */

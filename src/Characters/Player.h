@@ -1,18 +1,16 @@
-/*
 //
-// Created by Beef Erikson Studios on 10/11/2019.
+// Created by Beef Erikson Studios on 10/15/2019.
 //
 
 #ifndef BEEFROGUE_PLAYER_H
 #define BEEFROGUE_PLAYER_H
 
 #include "Character.h"
-#include "Input.h"
 
 class Player : public Character {
 public:
     // Constructor with all properties
-    *Player(std::string facingUp,
+    Player(std::string facingUp,
            std::string facingDown,
            std::string facingLeft,
            std::string facingRight,
@@ -23,12 +21,7 @@ public:
                       facingLeft,
                       facingRight,
                       isNPC,
-                      health) {};
-
-
-    // Move player based on provided direction
-    void movePlayer(int keypress, SDL_Texture *gTexture);
-
+                      health){}
 };
 
-#endif //BEEFROGUE_PLAYER_H*/
+#endif //BEEFROGUE_PLAYER_H

@@ -6,6 +6,7 @@
 #include <SDL_image.h>
 #include <string>
 #include <cstdio>
+#include "Player.h"
 
 // Window parameters
 const int SCREEN_WIDTH = 640;
@@ -160,15 +161,23 @@ int main(int argc, char *args[]) {
             // Event handler
             SDL_Event event;
 
-            //
-            // MAIN GAME LOOP
-            //
+            // Create Player
+            Player player("../sprites/player/playerUp.png",
+                          "../sprites/player/playerDown.png",
+                          "../sprites/player/playerLeft.png",
+                          "../sprites/player/playerRight.png",
+                          false,
+                          100);
+
+            ///
+            /// MAIN GAME LOOP
+            ///
+
             while (!quit) {
                 // Handle events
                 while (SDL_PollEvent(&event) != 0) {
                     // User input made
-                    if (event.type == SDL_QUIT)
-                    {
+                    if (event.type == SDL_QUIT) {
                         quit = true;
                     }
                 }
@@ -188,6 +197,10 @@ int main(int argc, char *args[]) {
                 // Update screen
                 SDL_RenderPresent(gRenderer);
             }
+
+            ///
+            /// End Main Game Loop
+            ///
         }
     }
 
