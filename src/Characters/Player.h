@@ -10,18 +10,20 @@
 class Player : public Character {
 public:
     // Constructor with all properties
-    Player(std::string facingUp,
+    Player(std::string name,
+           std::string facingUp,
            std::string facingDown,
            std::string facingLeft,
            std::string facingRight,
            bool isNPC,
            int health) :
-            Character(facingUp,
+            Character(name,
+                      facingUp,
                       facingDown,
                       facingLeft,
                       facingRight,
                       isNPC,
-                      health){}
+                      health) {}
 };
 
 #endif //BEEFROGUE_PLAYER_H

@@ -162,7 +162,8 @@ int main(int argc, char *args[]) {
             SDL_Event event;
 
             // Create Player
-            Player player("../sprites/player/playerUp.png",
+            Player player("Beef",
+                          "../sprites/player/playerUp.png",
                           "../sprites/player/playerDown.png",
                           "../sprites/player/playerLeft.png",
                           "../sprites/player/playerRight.png",
@@ -172,26 +173,47 @@ int main(int argc, char *args[]) {
             ///
             /// MAIN GAME LOOP
             ///
-
             while (!quit) {
                 // Handle events
                 while (SDL_PollEvent(&event) != 0) {
-                    // User input made
+                    // Quits game if X is clicked
                     if (event.type == SDL_QUIT) {
                         quit = true;
+                    }
+
+                    // Keyboard input detected
+                    if (event.type == SDL_KEYDOWN) {
+                        // Player hit key, change sprite based on input
+                        switch (event.key.keysym.sym) {
+                            case SDLK_UP:
+                            case SDLK_w:
+                                gTexturePlayer = loadTexture(player.get_facingUp());
+                                break;
+                            case SDLK_DOWN:
+                            case SDLK_s:
+                                gTexturePlayer = loadTexture(player.get_facingDown());
+                                break;
+                            case SDLK_LEFT:
+                            case SDLK_a:
+                                gTexturePlayer = loadTexture(player.get_facingLeft());
+                                break;
+                            case SDLK_RIGHT:
+                            case SDLK_d:
+                                gTexturePlayer = loadTexture(player.get_facingRight());
+                                break;
+                        }
                     }
                 }
 
                 // Clear screen
                 SDL_RenderClear(gRenderer);
 
-                // Correctly scales and places player render
-                SDL_Rect playerRect{0, 0, 46, 64};
-
                 // Render background to screen
                 SDL_RenderCopy(gRenderer, gTextureBackground, nullptr, nullptr);
 
-                // Render player to screen
+                // TODO change this; put in character class definition for sprite size
+                // Render player to center of screen
+                SDL_Rect playerRect{SCREEN_WIDTH / 2 - 23, SCREEN_HEIGHT / 2 - 32, 46, 64};
                 SDL_RenderCopy(gRenderer, gTexturePlayer, nullptr, &playerRect);
 
                 // Update screen

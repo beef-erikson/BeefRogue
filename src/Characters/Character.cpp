@@ -4,3 +4,6 @@
 
 #include "Character.h"
 
+void Character::create(int x, int y) {
+
+}

@@ -11,18 +11,18 @@
 class Character {
 public:
     // Constructor
-    Character(std::string &facingUp,
+    Character(std::string &name,
+              std::string &facingUp,
               std::string &facingDown,
               std::string &facingLeft,
               std::string &facingRight,
               bool isNPC,
-              int health) : m_facingUp(facingUp), m_facingDown(facingDown), m_facingLeft(facingLeft),
-                            m_facingRight(facingRight), m_isNPC(isNPC), m_health(health){};
+              int health) : m_name(name), m_facingUp(facingUp), m_facingDown(facingDown), m_facingLeft(facingLeft),
+                            m_facingRight(facingRight), m_isNPC(isNPC), m_health(health) {};
 
     // Getters
-    int get_health() { return m_health; }
 
-    bool get_is_npc() { return m_isNPC; }
+    std::string get_name() { return m_name; }
 
     std::string get_facingUp() { return m_facingUp; }
 
@@ -32,7 +32,13 @@ public:
 
     std::string get_facingLeft() { return m_facingLeft; }
 
+    int get_health() { return m_health; }
+
+    bool get_is_npc() { return m_isNPC; }
+
     // Setters
+    void set_name(std::string &name) { m_name = name; }
+
     void set_facing_up(std::string &facingUp) { m_facingUp = facingUp; }
 
     void set_facing_down(std::string &facingDown) { m_facingDown = facingDown; }
@@ -45,8 +51,12 @@ public:
 
     void set_health(int health) { m_health = health; };
 
+    // TODO make this happen.
+    // Creates a Character object at the given x and y coordinates
+    void create(int x, int y);
 
 protected:
+    std::string m_name;
     std::string m_facingUp;
     std::string m_facingDown;
     std::string m_facingLeft;
