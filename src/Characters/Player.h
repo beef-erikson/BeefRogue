@@ -15,6 +15,8 @@ public:
            std::string facingDown,
            std::string facingLeft,
            std::string facingRight,
+           int spriteHeight,
+           int spriteWidth,
            bool isNPC,
            int health) :
             Character(name,
@@ -22,6 +24,8 @@ public:
                       facingDown,
                       facingLeft,
                       facingRight,
+                      spriteHeight,
+                      spriteWidth,
                       isNPC,
                       health) {}
 };

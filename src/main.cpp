@@ -37,7 +37,6 @@ SDL_Texture *gTexturePlayer{nullptr};
 // Current displayed background texture
 SDL_Texture *gTextureBackground{nullptr};
 
-
 bool init() {
     // Initialization flag
     bool success = true;
@@ -167,8 +166,15 @@ int main(int argc, char *args[]) {
                           "../sprites/player/playerDown.png",
                           "../sprites/player/playerLeft.png",
                           "../sprites/player/playerRight.png",
+                          64,
+                          46,
                           false,
                           100);
+
+            // Player rectangle size, center of screen
+            SDL_Rect playerRect{SCREEN_WIDTH / 2 - player.get_spriteWidth() / 2,
+                                 SCREEN_HEIGHT / 2 - player.get_spriteHeight() / 2,
+                                 player.get_spriteWidth(), player.get_spriteHeight()};
 
             ///
             /// MAIN GAME LOOP
@@ -188,18 +194,22 @@ int main(int argc, char *args[]) {
                             case SDLK_UP:
                             case SDLK_w:
                                 gTexturePlayer = loadTexture(player.get_facingUp());
+                                playerRect.y -= player.get_spriteHeight();
                                 break;
                             case SDLK_DOWN:
                             case SDLK_s:
                                 gTexturePlayer = loadTexture(player.get_facingDown());
+                                playerRect.y += player.get_spriteHeight();
                                 break;
                             case SDLK_LEFT:
                             case SDLK_a:
                                 gTexturePlayer = loadTexture(player.get_facingLeft());
+                                playerRect.x -= player.get_spriteWidth();
                                 break;
                             case SDLK_RIGHT:
                             case SDLK_d:
                                 gTexturePlayer = loadTexture(player.get_facingRight());
+                                playerRect.x += player.get_spriteWidth();
                                 break;
                         }
                     }
@@ -211,9 +221,7 @@ int main(int argc, char *args[]) {
                 // Render background to screen
                 SDL_RenderCopy(gRenderer, gTextureBackground, nullptr, nullptr);
 
-                // TODO change this; put in character class definition for sprite size
-                // Render player to center of screen
-                SDL_Rect playerRect{SCREEN_WIDTH / 2 - 23, SCREEN_HEIGHT / 2 - 32, 46, 64};
+                // Renders player to screen
                 SDL_RenderCopy(gRenderer, gTexturePlayer, nullptr, &playerRect);
 
                 // Update screen
