@@ -28,7 +28,7 @@ public:
     void render_update(SDL_Rect playerRect);
 
     // Updates input
-    void input_update(SDL_Event event, Player player, SDL_Rect playerRect);
+    void input_update(SDL_Event event, Player player, SDL_Rect *playerRect);
 
 public:
     // Window parameters

@@ -60,7 +60,7 @@ int main(int argc, char *args[]) {
 
                     if (event.type == SDL_KEYDOWN) {
                         // Keyboard input detected
-                        game.input_update(event, player, playerRect);
+                        game.input_update(event, player, &playerRect);
                     }
                 }
                 game.render_update(playerRect);

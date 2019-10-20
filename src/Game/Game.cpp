@@ -132,7 +132,7 @@ void Game::render_update(SDL_Rect playerRect) {
 
 // TODO movement is not working, fix this.
 // Updates input
-void Game::input_update(SDL_Event event, Player player, SDL_Rect playerRect) {
+void Game::input_update(SDL_Event event, Player player, SDL_Rect *playerRect) {
     // Keyboard input detected
     if (event.type == SDL_KEYDOWN) {
         // Player hit key, change sprite based on input
@@ -140,22 +140,22 @@ void Game::input_update(SDL_Event event, Player player, SDL_Rect playerRect) {
             case SDLK_UP:
             case SDLK_w:
                 gTexturePlayer = loadTexture(player.get_facingUp());
-                playerRect.y -= player.get_spriteHeight();
+                playerRect->y -= player.get_spriteHeight();
                 break;
             case SDLK_DOWN:
             case SDLK_s:
                 gTexturePlayer = loadTexture(player.get_facingDown());
-                playerRect.y += player.get_spriteHeight();
+                playerRect->y += player.get_spriteHeight();
                 break;
             case SDLK_LEFT:
             case SDLK_a:
                 gTexturePlayer = loadTexture(player.get_facingLeft());
-                playerRect.x -= player.get_spriteWidth();
+                playerRect->x -= player.get_spriteWidth();
                 break;
             case SDLK_RIGHT:
             case SDLK_d:
                 gTexturePlayer = loadTexture(player.get_facingRight());
-                playerRect.x += player.get_spriteWidth();
+                playerRect->x += player.get_spriteWidth();
                 break;
         }
     }
