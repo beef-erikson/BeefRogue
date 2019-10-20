@@ -7,3 +7,7 @@
 void Character::create(int x, int y) {
 
 }
+
+void Character::move_up() {
+
+}
