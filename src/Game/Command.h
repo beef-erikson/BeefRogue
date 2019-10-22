@@ -1,13 +1,11 @@
-
 //
-// Created by Beef Erikson Studios on 10/20/2019.
+// Created by Beef Erikson Studios on 10/22/2019.
 //
 
 #ifndef BEEFROGUE_COMMAND_H
 #define BEEFROGUE_COMMAND_H
 
 #include "Character.h"
-#include "Movement.h"
 
 // Command Class
 class Command {
@@ -16,18 +14,33 @@ public:
     virtual void execute(Character &character) = 0;
 };
 
-// Movement class
+//
+// Movement classes
+//
 class MoveUpCommand : public Command {
 public:
     void execute(Character &character) override {
-        ;
+        character.move_up(character);
     };
+};
 
-
-private:
-    Movement::MoveDirection direction_;
-    int distance_;
-    Character character_;
+class MoveDownCommand : public Command {
+public:
+    void execute(Character &character) override {
+        character.move_down(character);
+    };
+};
+class MoveLeftCommand : public Command {
+public:
+    void execute(Character &character) override {
+        character.move_left(character);
+    };
+};
+class MoveRightCommand : public Command {
+public:
+    void execute(Character &character) override {
+        character.move_right(character);
+    };
 };
 
 #endif //BEEFROGUE_COMMAND_H

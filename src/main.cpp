@@ -5,11 +5,7 @@
 #include <SDL.h>
 #include <cstdio>
 #include "Character.h"
-#include "InputHandler.h"
 #include "Game.h"
-
-// TODO Input handler
-//InputHandler input;
 
 // Game handler
 Game game;
@@ -33,16 +29,16 @@ int main(int argc, char *args[]) {
 
             // Create Player
             Character player("Beef",
-                          "../sprites/player/playerUp.png",
-                          "../sprites/player/playerDown.png",
-                          "../sprites/player/playerLeft.png",
-                          "../sprites/player/playerRight.png",
-                          game.screen_width / 2 - 23,               // half of sprite width subtracted
-                          game.screen_height / 2 - 32,              // half of sprite *height subtracted
-                          64,
-                          46,
-                          false,
-                          100);
+                             "../sprites/player/playerUp.png",
+                             "../sprites/player/playerDown.png",
+                             "../sprites/player/playerLeft.png",
+                             "../sprites/player/playerRight.png",
+                             game.screen_width / 2 - 23,               // half of sprite width subtracted
+                             game.screen_height / 2 - 32,              // half of sprite *height subtracted
+                             64,
+                             46,
+                             false,
+                             100);
 
             // Player rectangle size, placement at center of screen
             SDL_Rect playerRect{player.get_x_position(), player.get_y_position(),

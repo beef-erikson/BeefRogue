@@ -7,7 +7,6 @@
 
 #include <SDL.h>
 #include <string>
-#include <utility>
 
 class Character {
 public:
@@ -76,6 +75,17 @@ public:
     void set_is_NPC(bool isNPC) { isNPC_ = isNPC; };
 
     void set_health(int health) { health_ = health; };
+
+    //
+    // Movement
+    //
+    void move_up(Character character);
+
+    void move_down(Character character);
+
+    void move_left(Character character);
+
+    void move_right(Character character);
 
 private:
     // Character name

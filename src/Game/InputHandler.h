@@ -1,6 +1,5 @@
-/*
 //
-// Created by Beef Erikson Studios on 10/18/2019.
+// Created by Beef Erikson Studios on 10/22/2019.
 //
 
 #ifndef BEEFROGUE_INPUTHANDLER_H
@@ -11,10 +10,7 @@
 
 class InputHandler {
 public:
-    Character *handleInput();
-
-    // Keyboard input detected
-    Command key_press(SDL_Event event);
+    Command *handleInput(SDL_Event event);
 
 private:
     Command *key_up_;
@@ -25,4 +21,3 @@ private:
 
 
 #endif //BEEFROGUE_INPUTHANDLER_H
-*/

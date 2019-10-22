@@ -3,7 +3,7 @@
 //
 
 #include "Game.h"
-
+#include "Command.h"
 
 // Starts SDL and creates window
 bool Game::init() {
@@ -129,6 +129,8 @@ void Game::render_update(SDL_Rect playerRect) {
     // Update screen
     SDL_RenderPresent(gRenderer);
 }
+
+// Handles input
 
 // TODO movement is not working, fix this.
 // Updates input
