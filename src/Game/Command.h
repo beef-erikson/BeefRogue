@@ -19,7 +19,9 @@ public:
 // Movement class
 class MoveUpCommand : public Command {
 public:
-    virtual void execute(Movement::MoveDirection direction, int distance, Character &character);
+    void execute(Character &character) override {
+        ;
+    };
 
 
 private:
