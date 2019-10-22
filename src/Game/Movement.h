@@ -8,6 +8,14 @@
 
 class Movement {
 public:
+    enum MoveDirection {
+        MOVE_UP,
+        MOVE_DOWN,
+        MOVE_RIGHT,
+        MOVE_LEFT
+    };
+
+public:
     void move_up();
     void move_down();
     void move_left();

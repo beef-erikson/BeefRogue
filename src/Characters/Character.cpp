@@ -1,3 +1,4 @@
+/*
 //
 // Created by Beef Erikson Studios on 10/15/2019.
 //
@@ -11,3 +12,4 @@ void Character::create(int x, int y) {
 void Character::move_up() {
 
 }
+*/

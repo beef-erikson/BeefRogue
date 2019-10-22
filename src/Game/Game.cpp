@@ -132,7 +132,7 @@ void Game::render_update(SDL_Rect playerRect) {
 
 // TODO movement is not working, fix this.
 // Updates input
-void Game::input_update(SDL_Event event, Player player, SDL_Rect *playerRect) {
+void Game::input_update(SDL_Event event, Character player, SDL_Rect *playerRect) {
     // Keyboard input detected
     if (event.type == SDL_KEYDOWN) {
         // Player hit key, change sprite based on input

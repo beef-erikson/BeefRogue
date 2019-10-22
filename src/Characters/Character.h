@@ -7,21 +7,24 @@
 
 #include <SDL.h>
 #include <string>
-#include <bits/stdc++.h>
+#include <utility>
 
 class Character {
 public:
     // Constructor
-    Character(std::string &name,
-              std::string &facingUp,
-              std::string &facingDown,
-              std::string &facingLeft,
-              std::string &facingRight,
+    Character(std::string name,
+              std::string facingUp,
+              std::string facingDown,
+              std::string facingLeft,
+              std::string facingRight,
+              int xPosition,
+              int yPosition,
               int spriteHeight,
               int spriteWidth,
               bool isNPC,
-              int health) : name_(name), facingUp_(facingUp), facingDown_(facingDown), facingLeft_(facingLeft),
-                            facingRight_(facingRight), spriteHeight_(spriteHeight), spriteWidth_(spriteWidth),
+              int health) : name_(std::move(name)), facingUp_(std::move(facingUp)), facingDown_(std::move(facingDown)),
+                            facingLeft_(std::move(facingLeft)), facingRight_(std::move(facingRight)),
+                            x_(xPosition), y_(yPosition), spriteHeight_(spriteHeight), spriteWidth_(spriteWidth),
                             isNPC_(isNPC), health_(health) {};
 
     //
@@ -36,6 +39,10 @@ public:
     std::string get_facingRight() { return facingRight_; }
 
     std::string get_facingLeft() { return facingLeft_; }
+
+    int get_x_position() { return x_; }
+
+    int get_y_position() { return y_; }
 
     int get_spriteHeight() { return spriteHeight_; }
 
@@ -58,6 +65,10 @@ public:
 
     void set_facing_right(std::string &facingRight) { facingRight_ = facingRight; }
 
+    void set_x_position(int xPosition) { x_ = xPosition; }
+
+    void set_y_position(int yPosition) { y_ = yPosition; }
+
     void set_spriteHeight(int spriteHeight) { spriteHeight_ = spriteHeight; }
 
     void set_spriteWidth(int spriteWidth) { spriteWidth_ = spriteWidth; }
@@ -66,17 +77,7 @@ public:
 
     void set_health(int health) { health_ = health; };
 
-    // TODO make this happen.
-    // Creates a Character object at the given x and y coordinates
-    void create(int x, int y);
-
-    // Movement controls
-    void move_up();
-    void move_down();
-    void move_left();
-    void move_right();
-
-protected:
+private:
     // Character name
     std::string name_;
 
@@ -85,6 +86,10 @@ protected:
     std::string facingDown_;
     std::string facingLeft_;
     std::string facingRight_;
+
+    // Starting position
+    int x_;
+    int y_;
 
     // Sprite dimensions
     int spriteHeight_;

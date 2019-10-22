@@ -1,4 +1,4 @@
-/*
+
 //
 // Created by Beef Erikson Studios on 10/20/2019.
 //
@@ -7,6 +7,7 @@
 #define BEEFROGUE_COMMAND_H
 
 #include "Character.h"
+#include "Movement.h"
 
 // Command Class
 class Command {
@@ -15,19 +16,16 @@ public:
     virtual void execute(Character &character) = 0;
 };
 
-
 // Movement class
-class MoveCommand : public Command {
+class MoveUpCommand : public Command {
 public:
-    // Constructor
-    MoveCommand(MoveDirection direction, float distance, Character characterToMove);
-    void execute(Character &character) override {
-        character.move_up(); }
+    virtual void execute(Movement::MoveDirection direction, int distance, Character &character);
+
 
 private:
-    MoveDirection _direction;
-    float _distance;
-    Character _character;
+    Movement::MoveDirection direction_;
+    int distance_;
+    Character character_;
 };
 
-#endif //BEEFROGUE_COMMAND_H*/
+#endif //BEEFROGUE_COMMAND_H

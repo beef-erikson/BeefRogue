@@ -4,7 +4,7 @@
 
 #include <SDL.h>
 #include <cstdio>
-#include "Player.h"
+#include "Character.h"
 #include "InputHandler.h"
 #include "Game.h"
 
@@ -32,19 +32,20 @@ int main(int argc, char *args[]) {
             SDL_Event event;
 
             // Create Player
-            Player player("Beef",
+            Character player("Beef",
                           "../sprites/player/playerUp.png",
                           "../sprites/player/playerDown.png",
                           "../sprites/player/playerLeft.png",
                           "../sprites/player/playerRight.png",
+                          game.screen_width / 2 - 23,               // half of sprite width subtracted
+                          game.screen_height / 2 - 32,              // half of sprite *height subtracted
                           64,
                           46,
                           false,
                           100);
 
-            // Player rectangle size, center of screen
-            SDL_Rect playerRect{game.screen_width / 2 - player.get_spriteWidth() / 2,
-                                game.screen_height / 2 - player.get_spriteHeight() / 2,
+            // Player rectangle size, placement at center of screen
+            SDL_Rect playerRect{player.get_x_position(), player.get_y_position(),
                                 player.get_spriteWidth(), player.get_spriteHeight()};
 
             ///

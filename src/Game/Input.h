@@ -6,7 +6,6 @@
 #define BEEFROGUE_INPUT_H
 
 #include <SDL.h>
-#include "Player.h"
 
 // Inputs
 enum KeyPress
