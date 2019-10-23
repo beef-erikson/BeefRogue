@@ -3,49 +3,8 @@
 //
 
 #include "Game.h"
-#include "Command.h"
 
-// Starts SDL and creates window
-bool Game::init() {
-    // Initialization flag
-    bool success = true;
-
-    // Initialize SDL
-    if (SDL_Init(SDL_INIT_VIDEO) < 0) {
-        printf("SDL could not initialize! SDL_Error: %s\n", SDL_GetError());
-        success = false;
-    }
-    else {
-        // Create window
-        gWindow = SDL_CreateWindow(GAME_NAME, 300, 300, screen_width, screen_height, SDL_WINDOW_SHOWN);
-        if (gWindow == nullptr) {
-            printf("Window could not be created! SDL_Error: %s\n", SDL_GetError());
-            success = false;
-        }
-        else {
-            // Create renderer for window
-            gRenderer = SDL_CreateRenderer(gWindow, -1, SDL_RENDERER_ACCELERATED);
-            if (gRenderer == nullptr) {
-                printf("Renderer could not be created! SDL_Error: %s\n", SDL_GetError());
-                success = false;
-            }
-            else {
-                // Initialize renderer color
-                SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
-
-                // Initialize PNG loading
-                int imgFlags = IMG_INIT_PNG;
-                if (!(IMG_Init(imgFlags))) {
-                    printf("SDL_Image could not initialize! SDL_Image error: %s\n", IMG_GetError());
-                    success = false;
-                }
-            }
-        }
-    }
-
-    return success;
-}
-
+App app;
 
 // Loads individual image as texture
 SDL_Texture *Game::loadTexture(const std::string &path) {
@@ -59,7 +18,7 @@ SDL_Texture *Game::loadTexture(const std::string &path) {
     }
     else {
         // Create texture from surface pixels
-        newTexture = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);
+        newTexture = SDL_CreateTextureFromSurface(app.renderer, loadedSurface);
         if (newTexture == nullptr) {
             printf("Unable to create texture from %s! SDL_Error: %s\n", path.c_str(), SDL_GetError());
         }
@@ -104,10 +63,10 @@ void Game::close() {
     gTextureBackground = nullptr;
 
     // Destroy window
-    SDL_DestroyRenderer(gRenderer);
-    SDL_DestroyWindow(gWindow);
-    gRenderer = nullptr;
-    gWindow = nullptr;
+    SDL_DestroyRenderer(app.renderer);
+    SDL_DestroyWindow(app.window);
+    app.renderer = nullptr;
+    app.window = nullptr;
 
     // Quit SDL subsystems
     IMG_Quit();
@@ -118,21 +77,19 @@ void Game::close() {
 // Updates and draws to screen
 void Game::render_update(SDL_Rect playerRect) {
     // Clear screen
-    SDL_RenderClear(gRenderer);
+    SDL_RenderClear(app.renderer);
 
     // Render background to screen
-    SDL_RenderCopy(gRenderer, gTextureBackground, nullptr, nullptr);
+    SDL_RenderCopy(app.renderer, gTextureBackground, nullptr, nullptr);
 
     // Renders player to screen
-    SDL_RenderCopy(gRenderer, gTexturePlayer, nullptr, &playerRect);
+    SDL_RenderCopy(app.renderer, gTexturePlayer, nullptr, &playerRect);
 
     // Update screen
-    SDL_RenderPresent(gRenderer);
+    SDL_RenderPresent(app.renderer);
 }
 
-// Handles input
 
-// TODO movement is not working, fix this.
 // Updates input
 void Game::input_update(SDL_Event event, Character player, SDL_Rect *playerRect) {
     // Keyboard input detected

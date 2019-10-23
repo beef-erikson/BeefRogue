@@ -4,17 +4,11 @@
 #ifndef BEEFROGUE_GAME_H
 #define BEEFROGUE_GAME_H
 
-#include <SDL.h>
-#include <SDL_image.h>
-#include <cstdio>
-#include <string>
+#include "Common.h"
 #include "Character.h"
 
 class Game {
 public:
-    // Starts SDL and creates window
-    bool init();
-
     // Loads individual image as texture
     SDL_Texture *loadTexture(const std::string &path);
 
@@ -31,11 +25,6 @@ public:
     void input_update(SDL_Event event, Character player, SDL_Rect *playerRect);
 
 public:
-    // Window parameters
-    int screen_width = 640;
-    int screen_height = 480;
-    const char *GAME_NAME = "BeefRogue v2019.0.1";
-
     // Current displayed player texture
     SDL_Texture *gTexturePlayer{nullptr};
 

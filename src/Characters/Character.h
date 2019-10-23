@@ -7,6 +7,7 @@
 
 #include <SDL.h>
 #include <string>
+#include <Controls/Command.h>
 
 class Character {
 public:
@@ -79,13 +80,7 @@ public:
     //
     // Movement
     //
-    void move_up(Character character);
-
-    void move_down(Character character);
-
-    void move_left(Character character);
-
-    void move_right(Character character);
+    void move_up();
 
 private:
     // Character name

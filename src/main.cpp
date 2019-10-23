@@ -2,17 +2,14 @@
 // Created by Beef Erikson Studios on 10/14/2019.
 //
 
-#include <SDL.h>
-#include <cstdio>
-#include "Character.h"
-#include "Game.h"
+#include "main.h"
 
 // Game handler
 Game game;
 
 int main(int argc, char *args[]) {
     // Start up SDL and create window
-    if (!game.init()) {
+    if (!init.InitSDL()) {
         printf("Failed to initialize!");
     }
     else {
@@ -33,8 +30,8 @@ int main(int argc, char *args[]) {
                              "../sprites/player/playerDown.png",
                              "../sprites/player/playerLeft.png",
                              "../sprites/player/playerRight.png",
-                             game.screen_width / 2 - 23,               // half of sprite width subtracted
-                             game.screen_height / 2 - 32,              // half of sprite *height subtracted
+                             SCREEN_WIDTH / 2 - 23,               // half of sprite width subtracted
+                             SCREEN_HEIGHT / 2 - 32,              // half of sprite *height subtracted
                              64,
                              46,
                              false,
