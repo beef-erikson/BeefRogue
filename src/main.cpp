@@ -4,9 +4,6 @@
 
 #include "main.h"
 
-// Game handler
-Game game;
-
 int main(int argc, char *args[]) {
     // Start up SDL and create window
     if (!init.InitSDL()) {
@@ -18,22 +15,16 @@ int main(int argc, char *args[]) {
             printf("Failed to load media!");
         }
         else {
-            // Main loop flag
-            bool quit = false;
-
-            // Event handler
-            SDL_Event event;
-
             // Create Player
             Character player("Beef",
                              "../sprites/player/playerUp.png",
                              "../sprites/player/playerDown.png",
                              "../sprites/player/playerLeft.png",
                              "../sprites/player/playerRight.png",
-                             SCREEN_WIDTH / 2 - 23,               // half of sprite width subtracted
-                             SCREEN_HEIGHT / 2 - 32,              // half of sprite *height subtracted
-                             64,
-                             46,
+                             SCREEN_WIDTH / 2 - 17,               // half of sprite width subtracted
+                             SCREEN_HEIGHT / 2 - 24,              // half of sprite *height subtracted
+                             34,
+                             48,
                              false,
                              100);
 
@@ -46,21 +37,20 @@ int main(int argc, char *args[]) {
             ///
             while (!quit) {
                 // Handle events
-                while (SDL_PollEvent(&event) != 0) {
+                while (SDL_PollEvent(&app.inputEvent) != 0) {
                     // Quits game if X is clicked
-                    if (event.type == SDL_QUIT) {
+                    if (app.inputEvent.type == SDL_QUIT) {
                         quit = true;
                     }
-
-                    if (event.type == SDL_KEYDOWN) {
-                        // Keyboard input detected
-                        game.input_update(event, player, &playerRect);
+                    // Keyboard input detected
+                    if (app.inputEvent.type == SDL_KEYDOWN) {
+                        game.input_update(app.inputEvent, player, &playerRect);
                     }
                 }
                 game.render_update(playerRect);
             }
             ///
-            /// End Main Game Loop
+            /// END GAME LOOP
             ///
         }
     }

@@ -13,6 +13,6 @@ include_directories(${SDL2_IMAGE_INCLUDE_DIR})
 include_directories(${PROJECT_SOURCE_DIR}/src/Game)
 include_directories(${PROJECT_SOURCE_DIR}/src/Characters)
 
-add_executable(BeefRogue src/main.cpp src/Game/Game.cpp src/Game/Game.h src/Characters/Character.h src/Characters/Character.h src/Characters/Controls/Command.h src/Characters/Character.cpp src/Characters/Controls/InputHandler.cpp src/Characters/Controls/InputHandler.h src/Game/Definitions.h src/Game/Structs.h src/Game/Init.cpp src/Game/Init.h src/Game/Common.h src/main.h)
+add_executable(BeefRogue src/main.cpp src/Game/Game.cpp src/Game/Game.h src/Characters/Character.h src/Characters/Character.h src/Controls/Command.h src/Characters/Character.cpp src/Controls/InputHandler.cpp src/Controls/InputHandler.h src/Game/Definitions.h src/Game/Structs.h src/Game/Init.cpp src/Game/Init.h src/Game/Common.h src/main.h)
 
 target_link_libraries(BeefRogue ${SDL2_LIBRARY} ${SDL2_IMAGE_LIBRARY} -lmingw32 -lSDL2main -lSDL2)

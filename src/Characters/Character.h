@@ -7,7 +7,6 @@
 
 #include <SDL.h>
 #include <string>
-#include <Controls/Command.h>
 
 class Character {
 public:
@@ -19,12 +18,12 @@ public:
               std::string facingRight,
               int xPosition,
               int yPosition,
-              int spriteHeight,
               int spriteWidth,
+              int spriteHeight,
               bool isNPC,
               int health) : name_(std::move(name)), facingUp_(std::move(facingUp)), facingDown_(std::move(facingDown)),
                             facingLeft_(std::move(facingLeft)), facingRight_(std::move(facingRight)),
-                            x_(xPosition), y_(yPosition), spriteHeight_(spriteHeight), spriteWidth_(spriteWidth),
+                            x_(xPosition), y_(yPosition), spriteWidth_(spriteWidth), spriteHeight_(spriteHeight),
                             isNPC_(isNPC), health_(health) {};
 
     //
@@ -52,6 +51,7 @@ public:
 
     bool get_is_npc() { return isNPC_; }
 
+
     //
     // Setters
     //
@@ -77,10 +77,17 @@ public:
 
     void set_health(int health) { health_ = health; };
 
+
     //
     // Movement
     //
     void move_up();
+
+    void move_down();
+
+    void move_left();
+
+    void move_right();
 
 private:
     // Character name

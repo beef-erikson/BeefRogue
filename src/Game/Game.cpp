@@ -37,15 +37,15 @@ bool Game::loadMedia() {
     bool success = true;
 
     // Load PNG player
-    gTexturePlayer = loadTexture("../sprites/player/playerDown.png");
-    if (gTexturePlayer == nullptr) {
+    app.player = loadTexture("../sprites/player/playerDown.png");
+    if (app.player == nullptr) {
         printf("Failed to load player image!\n");
         success = false;
     }
 
     // Load PNG background
-    gTextureBackground = loadTexture("../sprites/backgrounds/Greenlands 3.png");
-    if (gTextureBackground == nullptr) {
+    app.background = loadTexture("../sprites/backgrounds/Greenlands 3.png");
+    if (app.background == nullptr) {
         printf("Failed to load background image!\n");
         success = false;
     }
@@ -57,10 +57,10 @@ bool Game::loadMedia() {
 // Frees media and shuts down SDL
 void Game::close() {
     // Free loaded images
-    SDL_DestroyTexture(gTexturePlayer);
-    SDL_DestroyTexture(gTextureBackground);
-    gTexturePlayer = nullptr;
-    gTextureBackground = nullptr;
+    SDL_DestroyTexture(app.player);
+    SDL_DestroyTexture(app.background);
+    app.player = nullptr;
+    app.background = nullptr;
 
     // Destroy window
     SDL_DestroyRenderer(app.renderer);
@@ -80,10 +80,10 @@ void Game::render_update(SDL_Rect playerRect) {
     SDL_RenderClear(app.renderer);
 
     // Render background to screen
-    SDL_RenderCopy(app.renderer, gTextureBackground, nullptr, nullptr);
+    SDL_RenderCopy(app.renderer, app.background, nullptr, nullptr);
 
     // Renders player to screen
-    SDL_RenderCopy(app.renderer, gTexturePlayer, nullptr, &playerRect);
+    SDL_RenderCopy(app.renderer, app.player, nullptr, &playerRect);
 
     // Update screen
     SDL_RenderPresent(app.renderer);
@@ -98,22 +98,22 @@ void Game::input_update(SDL_Event event, Character player, SDL_Rect *playerRect)
         switch (event.key.keysym.sym) {
             case SDLK_UP:
             case SDLK_w:
-                gTexturePlayer = loadTexture(player.get_facingUp());
+                app.player = loadTexture(player.get_facingUp());
                 playerRect->y -= player.get_spriteHeight();
                 break;
             case SDLK_DOWN:
             case SDLK_s:
-                gTexturePlayer = loadTexture(player.get_facingDown());
+                app.player = loadTexture(player.get_facingDown());
                 playerRect->y += player.get_spriteHeight();
                 break;
             case SDLK_LEFT:
             case SDLK_a:
-                gTexturePlayer = loadTexture(player.get_facingLeft());
+                app.player = loadTexture(player.get_facingLeft());
                 playerRect->x -= player.get_spriteWidth();
                 break;
             case SDLK_RIGHT:
             case SDLK_d:
-                gTexturePlayer = loadTexture(player.get_facingRight());
+                app.player = loadTexture(player.get_facingRight());
                 playerRect->x += player.get_spriteWidth();
                 break;
         }

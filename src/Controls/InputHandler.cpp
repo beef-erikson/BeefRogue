@@ -23,7 +23,3 @@ Command *InputHandler::getInputs(SDL_Event event) {
         }
     }
 }
-
-void InputHandler::execute(Character &character) {
-    // nothing here yet, restructuring first
-}

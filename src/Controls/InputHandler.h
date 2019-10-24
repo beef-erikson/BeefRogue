@@ -6,11 +6,12 @@
 #define BEEFROGUE_INPUTHANDLER_H
 
 #include "Command.h"
+#include "Common.h"
 
 class InputHandler : public Command {
 public:
     Command *getInputs(SDL_Event event);
-    virtual void execute(Character &character);
+    void handleInput();
 
 private:
     Command *moveUp_;

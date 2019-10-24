@@ -9,6 +9,9 @@
 typedef struct App {
     SDL_Renderer *renderer;
     SDL_Window *window;
+    SDL_Texture *player;
+    SDL_Texture *background;
+    SDL_Event inputEvent;
 } App;
 
 #endif //BEEFROGUE_STRUCTS_H

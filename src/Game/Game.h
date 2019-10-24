@@ -1,6 +1,7 @@
 //
 // Created by Beef Erikson Studios on 10/20/2019.
 //
+
 #ifndef BEEFROGUE_GAME_H
 #define BEEFROGUE_GAME_H
 
@@ -23,19 +24,6 @@ public:
 
     // Updates input
     void input_update(SDL_Event event, Character player, SDL_Rect *playerRect);
-
-public:
-    // Current displayed player texture
-    SDL_Texture *gTexturePlayer{nullptr};
-
-    // Current displayed background texture
-    SDL_Texture *gTextureBackground{nullptr};
-
-    // The window to render to
-    SDL_Window *gWindow{nullptr};
-
-    // The window renderer
-    SDL_Renderer *gRenderer{nullptr};
 };
 
 #endif //BEEFROGUE_GAME_H
