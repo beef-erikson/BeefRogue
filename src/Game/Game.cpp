@@ -1,68 +1,121 @@
 //
-// Created by Beef Erikson Studios on 10/3/2019.
+// Created by Beef Erikson Studios on 10/20/2019.
 //
 
 #include "Game.h"
 
-// Initializes window
-bool Game::init()
-{
-    // Initialises flag
+App app;
+
+// Loads individual image as texture
+SDL_Texture *Game::loadTexture(const std::string &path) {
+    // The final texture
+    SDL_Texture *newTexture{nullptr};
+
+    // Load image at specified path
+    SDL_Surface *loadedSurface = IMG_Load(path.c_str());
+    if (loadedSurface == nullptr) {
+        printf("Unable to load image %s! SDL_Image error: %s\n", path.c_str(), IMG_GetError());
+    }
+    else {
+        // Create texture from surface pixels
+        newTexture = SDL_CreateTextureFromSurface(app.renderer, loadedSurface);
+        if (newTexture == nullptr) {
+            printf("Unable to create texture from %s! SDL_Error: %s\n", path.c_str(), SDL_GetError());
+        }
+
+        // Remove old surface
+        SDL_FreeSurface(loadedSurface);
+    }
+
+    return newTexture;
+}
+
+
+// loads PNG files
+bool Game::loadMedia() {
+    // Loading success flag
     bool success = true;
 
-    // Initialises SDL
-    if (SDL_Init(SDL_INIT_VIDEO) < 0)
-    {
-        printf("SDL could not initialize! SDL_Error: %s\n", SDL_GetError());
+    // Load PNG player
+    app.player = loadTexture("../sprites/player/playerDown.png");
+    if (app.player == nullptr) {
+        printf("Failed to load player image!\n");
         success = false;
     }
-    else
-    {
-        // Create window
-        gameWindow = SDL_CreateWindow(GAME_TITLE, 300, 300,
-                                      SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
-        if (gameWindow == nullptr)
-        {
-            printf("Window could not be created! SDL_Error: %s\n", SDL_GetError());
-            success = false;
-        }
-        else
-        {
-            // Initialize PNG loading
-            int imgFlags = IMG_INIT_PNG;
-            if (!(IMG_Init(imgFlags)))
-            {
-                printf("SDL_image could not be initialized! SDL_image Error: %s\n", IMG_GetError());
-                success = false;
-            }
-            else
-            {
-                // Get window surface
-                gameScreenSurface = SDL_GetWindowSurface(gameWindow);
-            }
-        }
+
+    // Load PNG background
+    app.background = loadTexture("../sprites/backgrounds/Greenlands 3.png");
+    if (app.background == nullptr) {
+        printf("Failed to load background image!\n");
+        success = false;
     }
 
     return success;
 }
 
-// Ignored UnusedValue as it is actually being used to clear memory (setting the pointers to null)
-#pragma clang diagnostic push
-#pragma ide diagnostic ignored "UnusedValue"
-// Closes Game
-void Game::close(SDL_Surface *pGameCurrentSurface, SDL_Surface *pGameBackgroundSurface)
-{
-    // Deallocate surfaces
-    SDL_FreeSurface(pGameCurrentSurface);
-    SDL_FreeSurface(pGameBackgroundSurface);
-    pGameCurrentSurface = nullptr;
-    pGameBackgroundSurface = nullptr;
+
+// Frees media and shuts down SDL
+void Game::close() {
+    // Free loaded images
+    SDL_DestroyTexture(app.player);
+    SDL_DestroyTexture(app.background);
+    app.player = nullptr;
+    app.background = nullptr;
 
     // Destroy window
-    SDL_DestroyWindow(gameWindow);
-    gameWindow = nullptr;
+    SDL_DestroyRenderer(app.renderer);
+    SDL_DestroyWindow(app.window);
+    app.renderer = nullptr;
+    app.window = nullptr;
 
     // Quit SDL subsystems
+    IMG_Quit();
     SDL_Quit();
 }
-#pragma clang diagnostic pop
+
+
+// Updates and draws to screen
+void Game::render_update(SDL_Rect playerRect) {
+    // Clear screen
+    SDL_RenderClear(app.renderer);
+
+    // Render background to screen
+    SDL_RenderCopy(app.renderer, app.background, nullptr, nullptr);
+
+    // Renders player to screen
+    SDL_RenderCopy(app.renderer, app.player, nullptr, &playerRect);
+
+    // Update screen
+    SDL_RenderPresent(app.renderer);
+}
+
+
+// Updates input
+void Game::input_update(SDL_Event event, Character player, SDL_Rect *playerRect) {
+    // Keyboard input detected
+    if (event.type == SDL_KEYDOWN) {
+        // Player hit key, change sprite based on input
+        switch (event.key.keysym.sym) {
+            case SDLK_UP:
+            case SDLK_w:
+                app.player = loadTexture(player.get_facingUp());
+                playerRect->y -= player.get_spriteHeight();
+                break;
+            case SDLK_DOWN:
+            case SDLK_s:
+                app.player = loadTexture(player.get_facingDown());
+                playerRect->y += player.get_spriteHeight();
+                break;
+            case SDLK_LEFT:
+            case SDLK_a:
+                app.player = loadTexture(player.get_facingLeft());
+                playerRect->x -= player.get_spriteWidth();
+                break;
+            case SDLK_RIGHT:
+            case SDLK_d:
+                app.player = loadTexture(player.get_facingRight());
+                playerRect->x += player.get_spriteWidth();
+                break;
+        }
+    }
+}

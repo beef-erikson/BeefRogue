@@ -1,31 +1,29 @@
 //
-// Created by Beef Erikson Studios on 10/3/2019.
+// Created by Beef Erikson Studios on 10/20/2019.
 //
 
 #ifndef BEEFROGUE_GAME_H
 #define BEEFROGUE_GAME_H
 
-#include <SDL.h>
-#include <SDL_image.h>
-#include <cstdio>
+#include "Common.h"
+#include "Character.h"
 
-class Game
-{
+class Game {
 public:
-    //Screen constants
-    const int SCREEN_WIDTH{800};
-    const int SCREEN_HEIGHT{600};
-    const char *const GAME_TITLE{"BeefRogue v2019.0.1"};
+    // Loads individual image as texture
+    SDL_Texture *loadTexture(const std::string &path);
 
-    // SDL Variables
-    SDL_Window *gameWindow = nullptr;
-    SDL_Surface *gameScreenSurface = nullptr;
+    // loads PNG files
+    bool loadMedia();
 
-    // Initializes game
-    bool init();
+    // Frees media and shuts down SDL
+    void close();
 
-    // Closes game
-    void close(SDL_Surface *pGameCurrentSurface, SDL_Surface *pGameBackgroundSurface);
+    // Updates and draws to screen
+    void render_update(SDL_Rect playerRect);
+
+    // Updates input
+    void input_update(SDL_Event event, Character player, SDL_Rect *playerRect);
 };
 
 #endif //BEEFROGUE_GAME_H

@@ -1,68 +1,60 @@
-#include <cstdio>
-#include <SDL.h>
-#include "Game.h"
-#include "Media.h"
-#include "Input.h"
+//
+// Created by Beef Erikson Studios on 10/14/2019.
+//
 
-Game game;
+#include "main.h"
 
-// The images that correspond to a keypress
-SDL_Surface *gameKeyPressSurfaces[KeyPress::KEY_PRESS_SURFACE_TOTAL];
-
-// Current displayed image
-SDL_Surface *gameCurrentSurface = nullptr;
-
-// Background image
-SDL_Surface *gameBackgroundSurface = nullptr;
-
-int main(int argc, char *args[])
-{
+int main(int argc, char *args[]) {
     // Start up SDL and create window
-    if (!game.init())
-    {
-        printf("Failed to initialize!\n");
+    if (!init.InitSDL()) {
+        printf("Failed to initialize!");
     }
-    else if (!Media::loadMedia(gameKeyPressSurfaces, &gameBackgroundSurface))
-    {
-        printf("Failed to load media!\n");
-    }
-    else
-    {
-        // Main loop flag
-        bool quit = false;
+    else {
+        // Load media
+        if (!game.loadMedia()) {
+            printf("Failed to load media!");
+        }
+        else {
+            // Create Player
+            Character player("Beef",
+                             "../sprites/player/playerUp.png",
+                             "../sprites/player/playerDown.png",
+                             "../sprites/player/playerLeft.png",
+                             "../sprites/player/playerRight.png",
+                             SCREEN_WIDTH / 2 - 17,               // half of sprite width subtracted
+                             SCREEN_HEIGHT / 2 - 24,              // half of sprite *height subtracted
+                             34,
+                             48,
+                             false,
+                             100);
 
-        // Event handler
-        SDL_Event event;
+            // Player rectangle size, placement at center of screen
+            SDL_Rect playerRect{player.get_x_position(), player.get_y_position(),
+                                player.get_spriteWidth(), player.get_spriteHeight()};
 
-        // Set default surface to display
-        gameCurrentSurface = gameKeyPressSurfaces[KeyPress::KEY_PRESS_SURFACE_DEFAULT];
-
-        //
-        // Main Game loop
-        //
-        while (!quit)
-        {
-            // Handle events on queue
-            while (SDL_PollEvent(&event) != 0)
-            {
-                // Handles keyboard input
-                Input::KeyPressed(event.type, &quit, event, gameKeyPressSurfaces, gameCurrentSurface);
+            ///
+            /// MAIN GAME LOOP
+            ///
+            while (!quit) {
+                // Handle events
+                while (SDL_PollEvent(&app.inputEvent) != 0) {
+                    // Quits game if X is clicked
+                    if (app.inputEvent.type == SDL_QUIT) {
+                        quit = true;
+                    }
+                    // Keyboard input detected
+                    if (app.inputEvent.type == SDL_KEYDOWN) {
+                        game.input_update(app.inputEvent, player, &playerRect);
+                    }
+                }
+                game.render_update(playerRect);
             }
-
-            // Apply stretched background
-            SDL_Rect stretchBackground = Media::stretchBackground();
-            SDL_BlitScaled(gameBackgroundSurface, nullptr, game.gameScreenSurface, &stretchBackground);
-
-            // Apply the image
-            SDL_BlitSurface(gameCurrentSurface, nullptr, game.gameScreenSurface, nullptr);
-
-            // Update the surface
-            SDL_UpdateWindowSurface(game.gameWindow);
+            ///
+            /// END GAME LOOP
+            ///
         }
     }
 
-    // Free resources and close SDL
-    game.close(gameCurrentSurface, gameBackgroundSurface);
-
+    game.close();
     return 0;
 }
